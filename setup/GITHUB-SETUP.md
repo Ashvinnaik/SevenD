@@ -213,15 +213,42 @@ How items flow through checkpoint gates:
 
 ---
 
-## Step 6: Verify Setup
+## Step 6: Configure Agent Automation
+
+The 7D Agent Worker automates checkpoint reviews using Claude. See [AGENT-AUTOMATION.md](../framework/AGENT-AUTOMATION.md) for full details.
+
+### Add Secret
+
+Go to **Settings > Secrets and variables > Actions > Secrets**:
+
+| Secret | Value |
+|--------|-------|
+| `ANTHROPIC_API_KEY` | Your Anthropic API key |
+
+### Add Variables (Optional)
+
+Go to **Settings > Secrets and variables > Actions > Variables**:
+
+| Variable | Default | Description |
+|----------|---------|-------------|
+| `AGENT_ENABLED` | `true` | Set `false` to disable agent automation |
+| `AGENT_MODEL` | `claude-sonnet-4-5-20250929` | Claude model to use |
+| `AGENT_CONFIDENCE_AUTO` | `80` | Confidence threshold for auto-advance |
+| `AGENT_CONFIDENCE_APPROVE` | `50` | Confidence threshold for approval |
+
+---
+
+## Step 7: Verify Setup
 
 - [ ] Labels created (run `gh label list` to confirm)
 - [ ] Product Sprint project created with all columns
 - [ ] Dev Sprint project created with all columns
 - [ ] Custom fields added to both projects
 - [ ] Views created for both projects
+- [ ] `ANTHROPIC_API_KEY` secret added
 - [ ] Create a test Feature issue and verify it appears in Product Sprint at Define
-- [ ] Test the checkpoint workflow on the test issue
+- [ ] Verify the agent worker triggers and posts a checkpoint assessment
+- [ ] Test the full checkpoint workflow (agent review → human review → advance)
 
 ---
 

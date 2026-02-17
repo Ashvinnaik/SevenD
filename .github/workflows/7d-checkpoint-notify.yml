@@ -1,25 +1,13 @@
 name: 7D Checkpoint Notifications
 
+# Agent notifications are handled by 7d-agent-worker.yml.
+# This workflow only notifies humans when their review is needed.
+
 on:
   issues:
     types: [labeled]
 
 jobs:
-  notify-agent:
-    if: contains(github.event.label.name, 'awaiting:agent')
-    runs-on: ubuntu-latest
-    steps:
-      - name: Post agent review request
-        uses: actions/github-script@v7
-        with:
-          script: |
-            await github.rest.issues.createComment({
-              owner: context.repo.owner,
-              repo: context.repo.repo,
-              issue_number: context.payload.issue.number,
-              body: `## Agent Review Requested\n\nThis item is ready for checkpoint review. Agent, please:\n1. Review the phase outputs\n2. Complete the checkpoint validation\n3. Post your assessment using the checkpoint template\n4. Add \`agent:approved\` or \`agent:rejected\` label`
-            });
-
   notify-human:
     if: contains(github.event.label.name, 'awaiting:human')
     runs-on: ubuntu-latest
@@ -28,9 +16,23 @@ jobs:
         uses: actions/github-script@v7
         with:
           script: |
+            const issue = context.payload.issue;
+            const labels = issue.labels.map(l => l.name);
+
+            // Determine if agent approved or rejected
+            const agentApproved = labels.includes('agent:approved');
+            const agentRejected = labels.includes('agent:rejected');
+
+            let statusNote = '';
+            if (agentApproved) {
+              statusNote = 'The automated agent **approved** this checkpoint. Please validate the assessment.';
+            } else if (agentRejected) {
+              statusNote = 'The automated agent **rejected** this checkpoint. Please review the concerns and decide how to proceed.';
+            }
+
             await github.rest.issues.createComment({
               owner: context.repo.owner,
               repo: context.repo.repo,
-              issue_number: context.payload.issue.number,
-              body: `## Human Review Requested\n\nAgent has completed their assessment. Human reviewer, please:\n1. Review the agent's checkpoint assessment above\n2. Validate the evaluation\n3. Add \`human:approved\` or \`human:rejected\` label`
+              issue_number: issue.number,
+              body: `## Human Review Requested\n\n${statusNote}\n\nPlease:\n1. Review the agent's checkpoint assessment above\n2. Validate the evaluation\n3. Add \`human:approved\` or \`human:rejected\` label`
             });

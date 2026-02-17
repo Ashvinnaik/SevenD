@@ -47,6 +47,7 @@ Every phase ends with a **checkpoint gate** requiring both AI agent and human ap
 ├── framework/                     # THE 7D SYSTEM (pre-filled, rarely changed)
 │   ├── FRAMEWORK.md               # 7D lifecycle and principles
 │   ├── AGENT-GUIDANCE.md          # AI agent prompts per phase
+│   ├── AGENT-AUTOMATION.md        # Automated agent configuration and overrides
 │   ├── DUAL-TRACK-SPRINTS.md      # Sprint structure and checkpoints
 │   ├── METRICS.md                 # Velocity and quality metrics
 │   ├── CHEATSHEET.md              # Quick reference
@@ -67,7 +68,10 @@ Every phase ends with a **checkpoint gate** requiring both AI agent and human ap
 └── .github/                       # GITHUB INFRASTRUCTURE
     ├── ISSUE_TEMPLATE/            # Issue templates for all 7 phases + feature/bug
     ├── PULL_REQUEST_TEMPLATE.md   # PR checklist
-    └── workflows/                 # Automation (labels, notifications, metrics)
+    ├── scripts/                   # Agent automation scripts
+    │   ├── agent-prompts.js       # LLM prompt builder and API caller
+    │   └── phase-config.json      # Phase sequence and threshold config
+    └── workflows/                 # Automation (agent worker, tracking, labels)
 ```
 
 ---
@@ -96,6 +100,20 @@ Maps to your GitHub Projects boards. Tracks what's being shaped (Todo), what's i
 
 ---
 
+## Agent Automation
+
+The 7D Framework includes an automated AI agent that reviews checkpoints and advances items through phases:
+
+- When an issue reaches a checkpoint, the agent calls Claude to assess the phase work
+- **High confidence (>= 80)**: Auto-advances to the next phase (Discovery phases only)
+- **Medium confidence (50-79)**: Approves but flags for human review
+- **Low confidence (< 50)**: Rejects and flags for human review
+- **Develop and Deploy phases always require human review**
+
+All agent actions are posted as transparent issue comments with full reasoning. Configure thresholds via repository variables. See [`framework/AGENT-AUTOMATION.md`](framework/AGENT-AUTOMATION.md) for details.
+
+---
+
 ## After Forking: Setup Checklist
 
 - [ ] Fill in [`docs/ARCHITECTURE.md`](docs/ARCHITECTURE.md) with your app's architecture
@@ -103,6 +121,7 @@ Maps to your GitHub Projects boards. Tracks what's being shaped (Todo), what's i
 - [ ] Fill in [`setup/TEAM.md`](setup/TEAM.md) with your team members and roles
 - [ ] Run [`setup/scripts/setup-labels.sh`](setup/scripts/setup-labels.sh) to create labels
 - [ ] Follow [`setup/GITHUB-SETUP.md`](setup/GITHUB-SETUP.md) to create project boards
+- [ ] Add `ANTHROPIC_API_KEY` secret for agent automation (see [`framework/AGENT-AUTOMATION.md`](framework/AGENT-AUTOMATION.md))
 - [ ] Update links in [`.github/ISSUE_TEMPLATE/config.yml`](.github/ISSUE_TEMPLATE/config.yml)
 - [ ] Create your first Feature issue to test the flow
 - [ ] Read [`framework/CHEATSHEET.md`](framework/CHEATSHEET.md) for a quick overview

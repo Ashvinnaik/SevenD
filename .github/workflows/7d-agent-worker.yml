@@ -1,0 +1,183 @@
+name: 7D Agent Worker
+
+on:
+  issues:
+    types: [labeled]
+
+jobs:
+  agent-review:
+    if: >
+      github.event.label.name == 'awaiting:agent' &&
+      vars.AGENT_ENABLED != 'false'
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout repo
+        uses: actions/checkout@v4
+
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: '20'
+
+      - name: Run agent assessment
+        id: agent
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          ANTHROPIC_API_KEY: ${{ secrets.ANTHROPIC_API_KEY }}
+          ISSUE_NUMBER: ${{ github.event.issue.number }}
+          REPO_OWNER: ${{ github.repository_owner }}
+          REPO_NAME: ${{ github.event.repository.name }}
+          AGENT_MODEL: ${{ vars.AGENT_MODEL }}
+          AGENT_CONFIDENCE_AUTO: ${{ vars.AGENT_CONFIDENCE_AUTO }}
+          AGENT_CONFIDENCE_APPROVE: ${{ vars.AGENT_CONFIDENCE_APPROVE }}
+        run: |
+          RESULT=$(node .github/scripts/agent-prompts.js)
+          echo "result<<EOF" >> $GITHUB_OUTPUT
+          echo "$RESULT" >> $GITHUB_OUTPUT
+          echo "EOF" >> $GITHUB_OUTPUT
+
+      - name: Process agent result
+        uses: actions/github-script@v7
+        env:
+          AGENT_RESULT: ${{ steps.agent.outputs.result }}
+        with:
+          script: |
+            const result = JSON.parse(process.env.AGENT_RESULT);
+            const issue = context.payload.issue;
+
+            if (result.error) {
+              await github.rest.issues.createComment({
+                owner: context.repo.owner,
+                repo: context.repo.repo,
+                issue_number: issue.number,
+                body: `## Agent Error\n\nThe automated agent encountered an error:\n\`${result.message}\`\n\nPlease review manually.`
+              });
+
+              // Remove awaiting:agent, add awaiting:human as fallback
+              await github.rest.issues.removeLabel({
+                owner: context.repo.owner, repo: context.repo.repo,
+                issue_number: issue.number, name: 'awaiting:agent'
+              }).catch(() => {});
+              await github.rest.issues.addLabels({
+                owner: context.repo.owner, repo: context.repo.repo,
+                issue_number: issue.number, labels: ['awaiting:human']
+              });
+              return;
+            }
+
+            // Build the assessment comment
+            const confidenceBar = '█'.repeat(Math.floor(result.confidence / 10)) +
+                                  '░'.repeat(10 - Math.floor(result.confidence / 10));
+
+            let actionText;
+            if (result.action === 'auto_advance') {
+              actionText = `**Auto-advancing** to ${result.next_phase.toUpperCase()} phase (confidence >= ${result.thresholds.auto})`;
+            } else if (result.action === 'approve_flag_human') {
+              actionText = `**Approved** but flagged for human review (confidence ${result.confidence} < auto-advance threshold ${result.thresholds.auto})`;
+            } else {
+              actionText = `**Rejected** — needs work before proceeding`;
+            }
+
+            const concernsText = result.concerns.length > 0
+              ? `### Concerns\n${result.concerns.map(c => `- ${c}`).join('\n')}`
+              : '';
+
+            const comment = [
+              `## ${result.checkpoint}: ${result.checkpoint_name} — Agent Assessment`,
+              '',
+              `**Verdict:** ${result.verdict} | **Confidence:** ${confidenceBar} ${result.confidence}/100`,
+              '',
+              `**Action:** ${actionText}`,
+              '',
+              `**Summary:** ${result.summary}`,
+              '',
+              concernsText,
+              '',
+              '<details>',
+              '<summary>Full Assessment</summary>',
+              '',
+              result.assessment,
+              '',
+              '</details>',
+              '',
+              '---',
+              `_Automated by 7D Agent Worker | Model: ${process.env.AGENT_MODEL || 'default'}_`
+            ].filter(Boolean).join('\n');
+
+            // Post the comment
+            await github.rest.issues.createComment({
+              owner: context.repo.owner,
+              repo: context.repo.repo,
+              issue_number: issue.number,
+              body: comment
+            });
+
+            // Remove awaiting:agent label
+            await github.rest.issues.removeLabel({
+              owner: context.repo.owner, repo: context.repo.repo,
+              issue_number: issue.number, name: 'awaiting:agent'
+            }).catch(() => {});
+
+            if (result.action === 'auto_advance') {
+              // Auto-advance: approve + move to next phase
+              await github.rest.issues.addLabels({
+                owner: context.repo.owner, repo: context.repo.repo,
+                issue_number: issue.number, labels: ['agent:approved']
+              });
+
+              // Remove current phase label, add next phase label
+              const currentPhase = result.phase;
+              const nextPhase = result.next_phase;
+
+              if (nextPhase !== 'done') {
+                await github.rest.issues.removeLabel({
+                  owner: context.repo.owner, repo: context.repo.repo,
+                  issue_number: issue.number, name: currentPhase
+                }).catch(() => {});
+
+                // Remove old checkpoint label
+                const currentLabels = issue.labels.map(l => l.name);
+                const oldCPLabels = currentLabels.filter(l => l.startsWith('checkpoint:'));
+                for (const label of oldCPLabels) {
+                  await github.rest.issues.removeLabel({
+                    owner: context.repo.owner, repo: context.repo.repo,
+                    issue_number: issue.number, name: label
+                  }).catch(() => {});
+                }
+
+                // Remove approval labels for clean slate
+                for (const label of ['agent:approved', 'agent:rejected', 'human:approved', 'human:rejected']) {
+                  await github.rest.issues.removeLabel({
+                    owner: context.repo.owner, repo: context.repo.repo,
+                    issue_number: issue.number, name: label
+                  }).catch(() => {});
+                }
+
+                // Add next phase label (will trigger phase-labels workflow for new CP)
+                await github.rest.issues.addLabels({
+                  owner: context.repo.owner, repo: context.repo.repo,
+                  issue_number: issue.number, labels: [nextPhase]
+                });
+              } else {
+                // Item is done — close the issue
+                await github.rest.issues.update({
+                  owner: context.repo.owner, repo: context.repo.repo,
+                  issue_number: issue.number, state: 'closed'
+                });
+              }
+
+            } else if (result.action === 'approve_flag_human') {
+              // Approved but needs human review
+              await github.rest.issues.addLabels({
+                owner: context.repo.owner, repo: context.repo.repo,
+                issue_number: issue.number, labels: ['agent:approved', 'awaiting:human']
+              });
+
+            } else {
+              // Rejected
+              await github.rest.issues.addLabels({
+                owner: context.repo.owner, repo: context.repo.repo,
+                issue_number: issue.number, labels: ['agent:rejected', 'awaiting:human']
+              });
+            }

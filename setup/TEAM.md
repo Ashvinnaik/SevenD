@@ -26,6 +26,7 @@
 |-------|----------|------|
 | <!-- e.g., Claude --> | <!-- e.g., Cursor, CLI --> | Primary development agent |
 | <!-- e.g., Perplexity --> | <!-- Platform --> | Research agent |
+| 7D Agent Worker | GitHub Actions | Automated checkpoint reviewer — calls Claude to assess phase work and auto-advance (see [AGENT-AUTOMATION.md](../framework/AGENT-AUTOMATION.md)) |
 | GitHub Actions Bot | GitHub | Automation (labels, notifications, metrics) |
 
 ---
@@ -60,11 +61,18 @@ Who reviews at each checkpoint gate:
 - Drives sprint planning for the Dev Sprint
 - Responsible for technical quality and architecture decisions
 
-### AI Agent
+### AI Agent (Interactive)
 - Performs phase work as instructed by [AGENT-GUIDANCE.md](../framework/AGENT-GUIDANCE.md)
 - Provides checkpoint self-assessments
 - Cannot bypass phases, checkpoints, or anti-skip rules
 - Flags concerns for human review
+
+### 7D Agent Worker (Automated)
+- Runs via GitHub Actions when `awaiting:agent` label is applied
+- Calls Claude to perform checkpoint reviews automatically
+- Auto-advances items through Discovery phases when confidence is high (>= 80)
+- Always flags Develop and Deploy phases for human review
+- See [AGENT-AUTOMATION.md](../framework/AGENT-AUTOMATION.md) for configuration
 
 ### Contributor
 - Works on assigned tasks within their current phase

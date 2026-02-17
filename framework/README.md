@@ -15,6 +15,12 @@
 | [METRICS.md](METRICS.md) | 40+ velocity, quality, and governance metrics with targets |
 | [CHEATSHEET.md](CHEATSHEET.md) | Quick reference card for the full framework |
 
+## Agent Automation
+
+| Document | What It Covers |
+|----------|---------------|
+| [AGENT-AUTOMATION.md](AGENT-AUTOMATION.md) | How the automated agent works, configuration, overrides |
+
 ## Sprint Operations
 
 | Document | What It Covers |
