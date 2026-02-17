@@ -1,0 +1,135 @@
+name: "🔬 Diagnose - Task Breakdown & Planning"
+description: "Break down work into implementable tasks"
+title: "[Diagnose] "
+labels: ["diagnose", "delivery"]
+body:
+  - type: markdown
+    attributes:
+      value: |
+        ## Delivery Cycle: Diagnose Phase
+        Break down the documented spec into implementable tasks.
+
+  - type: input
+    id: related-document
+    attributes:
+      label: Related Document Issue
+      description: Link to the Document issue with the implementation spec
+      placeholder: "#123"
+    validations:
+      required: true
+
+  - type: textarea
+    id: code-review
+    attributes:
+      label: Existing Code Analysis
+      description: What existing code needs to be understood or modified?
+      placeholder: |
+        **Files/Modules to Modify:**
+        - `path/to/file.ts` - [what changes needed]
+        -
+
+        **Code to Understand:**
+        - [Component/module] - [why it's relevant]
+        -
+
+        **Patterns to Follow:**
+        - [Existing pattern in codebase]
+        -
+
+  - type: textarea
+    id: task-breakdown
+    attributes:
+      label: Task Breakdown
+      description: Break the work into small, implementable tasks
+      placeholder: |
+        ### Backend Tasks
+        - [ ] #new - [Task description] - Size: [XS/S/M/L]
+        - [ ] #new - [Task description] - Size: [XS/S/M/L]
+
+        ### Frontend Tasks
+        - [ ] #new - [Task description] - Size: [XS/S/M/L]
+        - [ ] #new - [Task description] - Size: [XS/S/M/L]
+
+        ### Testing Tasks
+        - [ ] #new - [Task description] - Size: [XS/S/M/L]
+
+        ### Documentation Tasks
+        - [ ] #new - [Task description] - Size: [XS/S/M/L]
+    validations:
+      required: true
+
+  - type: textarea
+    id: dependency-order
+    attributes:
+      label: Implementation Order
+      description: What's the sequence of tasks?
+      placeholder: |
+        ```mermaid
+        graph LR
+          A[Task 1] --> B[Task 2]
+          A --> C[Task 3]
+          B --> D[Task 4]
+          C --> D
+        ```
+
+        **Critical Path:**
+        1. Task 1 (blocks everything)
+        2. Task 2 + Task 3 (can parallel)
+        3. Task 4 (needs 2 and 3)
+    validations:
+      required: true
+
+  - type: textarea
+    id: estimates
+    attributes:
+      label: Effort Estimates
+      description: Time estimates for the work
+      placeholder: |
+        | Task | Estimate | Assignee |
+        |------|----------|----------|
+        | Task 1 | 2h | @person |
+        | Task 2 | 4h | @person |
+
+        **Total Estimate:** X hours/days
+        **Target Completion:** [date]
+
+  - type: textarea
+    id: technical-approach
+    attributes:
+      label: Technical Approach Notes
+      description: Implementation guidance for developers
+      placeholder: |
+        **Recommended Approach:**
+        -
+
+        **Gotchas to Watch For:**
+        -
+
+        **Useful References:**
+        - [Link to similar implementation]
+        - [Relevant documentation]
+
+  - type: dropdown
+    id: milestone
+    attributes:
+      label: Target Milestone
+      description: Which release/sprint is this for?
+      options:
+        - "Current Sprint"
+        - "Next Sprint"
+        - "Backlog"
+    validations:
+      required: true
+
+  - type: textarea
+    id: exit-criteria
+    attributes:
+      label: Exit Criteria for Diagnose Phase
+      description: What must be true before moving to Develop?
+      value: |
+        - [ ] All tasks created as separate issues
+        - [ ] Tasks are small enough (no XL tasks)
+        - [ ] Dependencies mapped
+        - [ ] Estimates provided
+        - [ ] Assignees identified
+        - [ ] Ready to start coding

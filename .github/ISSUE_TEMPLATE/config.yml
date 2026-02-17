@@ -1,0 +1,8 @@
+blank_issues_enabled: false
+contact_links:
+  - name: 7D Framework Guide
+    url: https://github.com/YOUR_ORG/YOUR_REPO/blob/main/framework/README.md
+    about: Read the 7D Framework documentation before creating issues
+  - name: Cheatsheet
+    url: https://github.com/YOUR_ORG/YOUR_REPO/blob/main/framework/CHEATSHEET.md
+    about: Quick reference for phases, checkpoints, and labels

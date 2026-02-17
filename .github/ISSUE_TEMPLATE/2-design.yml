@@ -1,0 +1,126 @@
+name: "🎨 Design - Solution Architecture"
+description: "Design the solution approach and architecture"
+title: "[Design] "
+labels: ["design", "discovery"]
+body:
+  - type: markdown
+    attributes:
+      value: |
+        ## Discovery Cycle: Design Phase
+        Use this template to architect your solution approach.
+
+  - type: input
+    id: related-define
+    attributes:
+      label: Related Define Issue
+      description: Link to the Define issue this designs a solution for
+      placeholder: "#123"
+    validations:
+      required: true
+
+  - type: textarea
+    id: solution-options
+    attributes:
+      label: Solution Options Considered
+      description: What approaches did you consider? Include pros/cons.
+      placeholder: |
+        ### Option 1: [Name]
+        - **Approach:**
+        - **Pros:**
+        - **Cons:**
+
+        ### Option 2: [Name]
+        - **Approach:**
+        - **Pros:**
+        - **Cons:**
+
+        ### Recommendation: Option [X] because...
+    validations:
+      required: true
+
+  - type: textarea
+    id: architecture
+    attributes:
+      label: Architecture Overview
+      description: High-level technical design
+      placeholder: |
+        ```
+        [Component diagram, data flow, or system overview]
+        ```
+
+        **Key Components:**
+        -
+
+        **Interactions:**
+        -
+    validations:
+      required: true
+
+  - type: textarea
+    id: data-model
+    attributes:
+      label: Data Model
+      description: Key entities and their relationships
+      placeholder: |
+        ```
+        [ERD or entity descriptions]
+        ```
+
+  - type: textarea
+    id: api-contracts
+    attributes:
+      label: API Contracts (if applicable)
+      description: Key API endpoints or interfaces
+      placeholder: |
+        ```
+        POST /api/resource
+        Request: { ... }
+        Response: { ... }
+        ```
+
+  - type: textarea
+    id: ux-design
+    attributes:
+      label: UX/UI Design
+      description: User experience considerations and mockups
+      placeholder: |
+        **User Flow:**
+        1. User starts at...
+        2. User clicks...
+        3. System responds with...
+
+        **Mockups:** [Link to Figma/sketches]
+
+  - type: textarea
+    id: technical-decisions
+    attributes:
+      label: Key Technical Decisions
+      description: Important choices and their rationale (ADRs)
+      placeholder: |
+        ### Decision: [What was decided]
+        - **Context:** Why this decision was needed
+        - **Options:** What was considered
+        - **Decision:** What we chose
+        - **Consequences:** What this means going forward
+
+  - type: textarea
+    id: risks
+    attributes:
+      label: Identified Risks
+      description: What could go wrong with this design?
+      placeholder: |
+        | Risk | Impact | Likelihood | Mitigation |
+        |------|--------|------------|------------|
+        |      |        |            |            |
+
+  - type: textarea
+    id: exit-criteria
+    attributes:
+      label: Exit Criteria for Design Phase
+      description: What must be true before moving to Discover?
+      value: |
+        - [ ] Architecture reviewed by team
+        - [ ] Key technical decisions documented
+        - [ ] Risks identified and mitigation planned
+        - [ ] UX flow makes sense for users
+        - [ ] Ready to prototype/validate

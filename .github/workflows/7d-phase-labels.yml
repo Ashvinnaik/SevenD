@@ -1,0 +1,50 @@
+name: 7D Phase Label Sync
+
+on:
+  issues:
+    types: [labeled, unlabeled]
+
+jobs:
+  sync-labels:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Sync checkpoint label based on phase
+        uses: actions/github-script@v7
+        with:
+          script: |
+            const issue = context.payload.issue;
+            const labels = issue.labels.map(l => l.name);
+
+            const phaseToCP = {
+              'define': 'checkpoint:cp-1',
+              'design': 'checkpoint:cp-2',
+              'discover': 'checkpoint:cp-3',
+              'document': 'checkpoint:cp-4',
+              'diagnose': 'checkpoint:cp-5',
+              'develop': 'checkpoint:cp-6',
+              'deploy': 'checkpoint:cp-7'
+            };
+
+            // Remove old checkpoint labels
+            const oldCPLabels = labels.filter(l => l.startsWith('checkpoint:'));
+            for (const label of oldCPLabels) {
+              await github.rest.issues.removeLabel({
+                owner: context.repo.owner,
+                repo: context.repo.repo,
+                issue_number: issue.number,
+                name: label
+              });
+            }
+
+            // Add new checkpoint label based on phase
+            for (const [phase, cp] of Object.entries(phaseToCP)) {
+              if (labels.includes(phase)) {
+                await github.rest.issues.addLabels({
+                  owner: context.repo.owner,
+                  repo: context.repo.repo,
+                  issue_number: issue.number,
+                  labels: [cp, 'awaiting:agent']
+                });
+                break;
+              }
+            }
