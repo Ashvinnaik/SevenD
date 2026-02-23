@@ -1,0 +1,57 @@
+name: "Discovery — New Backlog Item"
+description: "Propose a new feature, capability, or piece of work."
+labels: ["7d:discovery", "status:backlog"]
+body:
+  - type: markdown
+    attributes:
+      value: |
+        ## Discovery Phase
+        Use this template to add a new item to the backlog. Keep it high-level — detailed requirements come in the Definition phase.
+
+  - type: input
+    id: summary
+    attributes:
+      label: "One-line summary"
+      description: "What is this feature or capability?"
+      placeholder: "e.g., User authentication with email and password"
+    validations:
+      required: true
+
+  - type: dropdown
+    id: priority
+    attributes:
+      label: "Priority"
+      options:
+        - "Must Have (launch blocker)"
+        - "Should Have (important)"
+        - "Nice to Have (if time permits)"
+    validations:
+      required: true
+
+  - type: textarea
+    id: context
+    attributes:
+      label: "Context"
+      description: "Why do we need this? Who benefits? Any relevant research or user feedback?"
+      placeholder: "Users have been asking for..."
+
+  - type: textarea
+    id: out_of_scope
+    attributes:
+      label: "What this is NOT"
+      description: "Anything explicitly excluded from this item?"
+      placeholder: "e.g., Not building OAuth — just email/password for v1"
+
+  - type: textarea
+    id: open_questions
+    attributes:
+      label: "Open questions"
+      description: "Anything that needs to be answered before this can be defined?"
+      placeholder: "e.g., Do we need email verification?"
+
+  - type: textarea
+    id: dependencies
+    attributes:
+      label: "Dependencies"
+      description: "Does this depend on any other backlog items?"
+      placeholder: "e.g., Requires #12 (database setup) to be done first"

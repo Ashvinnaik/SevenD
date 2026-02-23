@@ -1,0 +1,74 @@
+name: "Design — Architecture Decision"
+description: "Document a technical design or architecture decision."
+labels: ["7d:design", "status:designing"]
+body:
+  - type: markdown
+    attributes:
+      value: |
+        ## Design Phase
+        Document how a feature will be built. Links to Definition requirements.
+
+  - type: input
+    id: definition_issue
+    attributes:
+      label: "Definition issue"
+      description: "Link to the Definition issue this designs (e.g., #43)"
+      placeholder: "#43"
+    validations:
+      required: true
+
+  - type: textarea
+    id: component_design
+    attributes:
+      label: "Component design"
+      description: "What components are involved? What are their responsibilities?"
+      value: |
+        ### [Component Name]
+        **Implements:** F01, F02
+        **Responsibilities:** [What it does]
+
+        **Interface:**
+        ```
+        [API endpoints, function signatures, or message formats]
+        ```
+
+        **Data model:**
+        ```
+        [Entity definitions, schema]
+        ```
+    validations:
+      required: true
+
+  - type: textarea
+    id: alternatives
+    attributes:
+      label: "Alternatives considered"
+      description: "What other approaches did you consider? Why not those?"
+      value: |
+        | Option | Pros | Cons | Verdict |
+        |--------|------|------|---------|
+        | [Option A] | | | Chosen |
+        | [Option B] | | | Rejected because... |
+
+  - type: textarea
+    id: security
+    attributes:
+      label: "Security considerations"
+      description: "Any security implications?"
+
+  - type: textarea
+    id: testing_strategy
+    attributes:
+      label: "Testing strategy"
+      description: "How will this be tested? Unit, integration, e2e?"
+
+  - type: checkboxes
+    id: design_review
+    attributes:
+      label: "Design review checklist"
+      options:
+        - label: "Every Definition requirement maps to a component"
+        - label: "All interfaces are documented"
+        - label: "Data model covers all entities"
+        - label: "Security considerations addressed"
+        - label: "Testing strategy defined"

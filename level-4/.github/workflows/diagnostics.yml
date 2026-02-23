@@ -1,0 +1,87 @@
+# 7D Framework — Diagnostics (Pre-Deploy)
+# Runs on every PR. Enforces code quality before merge.
+# Customize the commands for your project's stack.
+
+name: "7D Diagnostics"
+
+on:
+  pull_request:
+    branches: [main, staging]
+
+jobs:
+  lint:
+    name: "Lint"
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      # -- Uncomment and customize for your stack --
+
+      # Node.js
+      # - uses: actions/setup-node@v4
+      #   with:
+      #     node-version: 20
+      #     cache: npm
+      # - run: npm ci
+      # - run: npm run lint
+
+      # Python
+      # - uses: actions/setup-python@v5
+      #   with:
+      #     python-version: "3.12"
+      # - run: pip install ruff
+      # - run: ruff check .
+      # - run: ruff format --check .
+
+      - run: echo "Configure lint commands for your stack in .github/workflows/diagnostics.yml"
+
+  test:
+    name: "Test"
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      # -- Uncomment and customize for your stack --
+
+      # Node.js
+      # - uses: actions/setup-node@v4
+      #   with:
+      #     node-version: 20
+      #     cache: npm
+      # - run: npm ci
+      # - run: npm test
+
+      # Python
+      # - uses: actions/setup-python@v5
+      #   with:
+      #     python-version: "3.12"
+      # - run: pip install -r requirements.txt
+      # - run: pytest
+
+      - run: echo "Configure test commands for your stack in .github/workflows/diagnostics.yml"
+
+  build:
+    name: "Build"
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      # -- Uncomment and customize for your stack --
+
+      # Node.js
+      # - uses: actions/setup-node@v4
+      #   with:
+      #     node-version: 20
+      #     cache: npm
+      # - run: npm ci
+      # - run: npm run build
+
+      - run: echo "Configure build commands for your stack in .github/workflows/diagnostics.yml"
+
+  # Gate: All checks must pass before PR can be merged
+  diagnostics-gate:
+    name: "Diagnostics Gate"
+    needs: [lint, test, build]
+    runs-on: ubuntu-latest
+    steps:
+      - run: echo "All diagnostics checks passed. PR is ready for review."

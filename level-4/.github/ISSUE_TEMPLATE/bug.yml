@@ -1,0 +1,74 @@
+name: "Bug Report (Fix Log)"
+description: "Report a bug or error. This feeds the Fix Log."
+labels: ["type:bug"]
+body:
+  - type: markdown
+    attributes:
+      value: |
+        ## Diagnostics — Bug Report
+        Every bug gets logged. Every fix gets documented. This is how the project learns.
+
+  - type: dropdown
+    id: severity
+    attributes:
+      label: "Severity"
+      options:
+        - "Critical (system down, data loss)"
+        - "High (major feature broken)"
+        - "Medium (feature degraded)"
+        - "Low (cosmetic, minor)"
+    validations:
+      required: true
+
+  - type: input
+    id: phase_found
+    attributes:
+      label: "Phase found in"
+      description: "Where in the 7D process was this found?"
+      placeholder: "e.g., Development, Diagnostics pre-deploy, Post-deployment"
+
+  - type: textarea
+    id: error_message
+    attributes:
+      label: "Error message / stack trace"
+      description: "Paste the actual error."
+      render: shell
+    validations:
+      required: true
+
+  - type: textarea
+    id: expected
+    attributes:
+      label: "Expected behavior"
+      description: "What should have happened?"
+    validations:
+      required: true
+
+  - type: textarea
+    id: steps
+    attributes:
+      label: "Steps to reproduce"
+      value: |
+        1.
+        2.
+        3. Error occurs
+
+  - type: textarea
+    id: attempts
+    attributes:
+      label: "What I've tried"
+      description: "Document your debugging attempts. Failed attempts save future time."
+      value: |
+        - [ ] [Approach] — [Result]
+
+  - type: textarea
+    id: fix
+    attributes:
+      label: "Fix applied (if resolved)"
+      description: "Fill this in when fixed. What changed? What file, what line?"
+
+  - type: textarea
+    id: lesson
+    attributes:
+      label: "Lesson learned"
+      description: "What should we do differently to prevent this?"

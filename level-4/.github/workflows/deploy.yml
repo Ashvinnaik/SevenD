@@ -1,0 +1,82 @@
+# 7D Framework — Deployment
+# Runs on push to main after PR is merged.
+# Customize for your hosting provider.
+
+name: "7D Deploy"
+
+on:
+  push:
+    branches: [main]
+
+# Prevent concurrent deploys
+concurrency:
+  group: deploy-production
+  cancel-in-progress: false
+
+jobs:
+  deploy:
+    name: "Deploy to Production"
+    runs-on: ubuntu-latest
+
+    # Uncomment to use GitHub Environments for approval gates
+    # environment:
+    #   name: production
+    #   url: https://your-app.com
+
+    steps:
+      - uses: actions/checkout@v4
+
+      # -- Uncomment and customize for your hosting provider --
+
+      # Vercel
+      # - uses: amondnet/vercel-action@v25
+      #   with:
+      #     vercel-token: ${{ secrets.VERCEL_TOKEN }}
+      #     vercel-org-id: ${{ secrets.VERCEL_ORG_ID }}
+      #     vercel-project-id: ${{ secrets.VERCEL_PROJECT_ID }}
+      #     vercel-args: "--prod"
+
+      # Railway
+      # - run: railway up --service ${{ secrets.RAILWAY_SERVICE }}
+      #   env:
+      #     RAILWAY_TOKEN: ${{ secrets.RAILWAY_TOKEN }}
+
+      # Docker
+      # - run: docker build -t ${{ secrets.REGISTRY }}/${{ github.repository }}:${{ github.sha }} .
+      # - run: docker push ${{ secrets.REGISTRY }}/${{ github.repository }}:${{ github.sha }}
+
+      - run: echo "Configure deployment for your provider in .github/workflows/deploy.yml"
+
+  post-deploy:
+    name: "Post-Deploy Health Check"
+    needs: [deploy]
+    runs-on: ubuntu-latest
+    steps:
+      # -- Uncomment and set your production URL --
+
+      # - name: Health check
+      #   run: |
+      #     STATUS=$(curl -s -o /dev/null -w "%{http_code}" https://your-app.com/api/health)
+      #     if [ "$STATUS" != "200" ]; then
+      #       echo "Health check failed with status $STATUS"
+      #       exit 1
+      #     fi
+      #     echo "Health check passed"
+
+      - run: echo "Configure health check URL in .github/workflows/deploy.yml"
+
+  tag-release:
+    name: "Tag Release"
+    needs: [post-deploy]
+    runs-on: ubuntu-latest
+    permissions:
+      contents: write
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Create release tag
+        run: |
+          VERSION="v0.1.$(date +%Y%m%d%H%M)"
+          git tag -a "$VERSION" -m "Auto-release $VERSION"
+          git push origin "$VERSION"
+          echo "Tagged release: $VERSION"

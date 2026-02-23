@@ -1,0 +1,71 @@
+# 7D Framework (Level 3)
+
+Seven folders, one per phase. Two loops synced by Documentation. Weekly sprints. Shared fix log.
+
+```
+PRODUCT LOOP: 01-discovery/ → 02-definition/ → 03-design/
+TECH LOOP:    05-development/ → 06-diagnostics/ → 07-deployment/
+SYNC:         04-documentation/
+ERROR LOG:    Fix.md
+```
+
+## Before Every Task
+
+1. Read your sprint file in `05-development/sprint-NN.md` — find your assigned task
+2. Read `02-definition/DEFINITION.md` — requirements and acceptance criteria
+3. Read `03-design/DESIGN.md` — architecture, naming, code standards
+4. Check `04-documentation/DOCUMENTATION.md` Status Board — confirm Design is complete
+
+## While Coding
+
+- Follow Design naming conventions and code standards exactly. Don't invent patterns.
+- Log progress in the sprint file Development Log.
+- Errors: check Fix.md first. If new, log in BOTH Fix.md AND sprint file.
+
+## After Coding
+
+- Update sprint task status
+- Run diagnostics per `06-diagnostics/DIAGNOSTICS.md`
+- Update `04-documentation/DOCUMENTATION.md` Status Board
+- If deploying, follow `07-deployment/DEPLOYMENT.md` checklist
+
+## Phase Gates (Hard Rules)
+
+- No Definition without Discovery backlog entry
+- No Design without Approved Definition
+- No Development without completed Design
+- No Deployment without Diagnostics passing
+
+## Sprint Rules
+
+- One week per sprint. One file per sprint.
+- Only work on tasks in your current sprint file.
+- Errors logged in BOTH Fix.md (global) AND sprint file (local).
+- Sprint review at end of week — fill in review section.
+
+## When Unsure
+
+- Requirements unclear → Check DEFINITION.md, then DISCOVERY.md open questions, then ask.
+- Component might exist → Check DESIGN.md + DOCUMENTATION.md + codebase. Don't duplicate.
+- Architecture decision → Check Design Decisions Log for precedent. Pick simplest.
+- Error not seen → Check Fix.md (Resolved + Common). If new, debug, fix, log with root cause.
+- Diagnostics failing → Check test run log for patterns. Check Fix.md. Don't deploy.
+- Phase conflict → Stop. Flag it. Check Documentation first.
+
+## Don't
+
+- Don't code without reading Definition + Design
+- Don't skip Documentation updates after phase work
+- Don't fix errors silently — log in Fix.md AND sprint file
+- Don't add features not in Discovery backlog
+- Don't work outside your current sprint
+- Don't install packages without documenting
+- Don't deploy without Diagnostics passing
+- Don't deviate from Design without updating DESIGN.md first
+- Don't commit secrets or .env files
+- Don't skip sprint review
+- Don't close tasks without verifying acceptance criteria
+
+## Customizing
+
+Add stack-specific Don'ts as you discover agent mistakes. Add a Quick Reference section with common commands. Add cross-folder rules for how your phases interact. The more specific this file, the less the agent improvises.

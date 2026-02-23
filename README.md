@@ -1,133 +1,120 @@
-# 7D Framework
+# SevenD
 
-A structured software development lifecycle for AI-assisted teams. Seven phases, dual-track sprints, checkpoint governance.
-
----
-
-## What is the 7D Framework?
-
-The 7D Framework organizes software development into two interconnected cycles with documentation as the bridge:
+A progressive framework for building software with AI coding agents. Structure your project so AI agents know what to read, what to build, and when to stop and ask.
 
 ```
-    Discovery Cycle                         Delivery Cycle
-┌─────────────────┐                     ┌─────────────────┐
-│  Define ───┐    │                     │    ┌─── Diagnose│
-│      │     │    │                     │    │      │     │
-│      v     │    │                     │    │      v     │
-│  Design    │    │<── Document ───────>│    │   Develop  │
-│      │     │    │                     │    │      │     │
-│      v     │    │                     │    │      v     │
-│  Discover ─┘    │                     │    └─── Deploy  │
-└─────────────────┘                     └─────────────────┘
+PRODUCT LOOP                              TECH LOOP
+Discovery --> Definition --> Design  -->  Development --> Diagnostics --> Deployment
+                    |                                         |
+                Documentation (sync point)
 ```
 
-Every phase ends with a **checkpoint gate** requiring both AI agent and human approval before work advances.
+## The Problem
 
----
+AI coding agents produce better output when they have structured context. Without it, they invent component names, skip tests, build features nobody asked for, and lose track of what's been decided. SevenD gives your project a skeleton that any AI agent can follow.
+
+## Four Levels
+
+Pick the level that matches your project. You can always upgrade.
+
+| Level | Files | For | What you get |
+|-------|-------|-----|-------------|
+| **1** | 2 files | Solo, weekend, prototype | Product.md + Tech.md |
+| **2** | 4 files | Small team, real project | + Architecture.md, Resources.md, Project.md |
+| **3** | 7 folders | Complex project, weekly sprints | One folder per phase, sprint files, status board |
+| **4** | GitHub-native | Team on GitHub, CI/CD | Issues, Actions, PR gates, Projects board |
+
+Every level includes IDE rules for **Claude Code**, **Cursor**, **Windsurf**, and **VS Code Copilot**.
 
 ## Quick Start
 
-1. **Use this template** — Click "Use this template" on GitHub to create your repo
-2. **Fill in your project docs** — Start with the three docs in `docs/`
-3. **Set up GitHub** — Run `setup/scripts/setup-labels.sh` and follow `setup/GITHUB-SETUP.md`
-4. **Create your first issue** — Use the Feature template to start at Define
-5. **Read the framework** — Browse `framework/` to understand the process
+### Option 1: Copy the templates
 
----
+```bash
+# Clone the repo
+git clone https://github.com/AshNaik/SevenD.git
 
-## Repository Structure
+# Copy the level you need into your project
+cp -r SevenD/level-1/ my-project/    # Solo / prototype
+cp -r SevenD/level-2/ my-project/    # Small team
+cp -r SevenD/level-3/ my-project/    # Complex project
+cp -r SevenD/level-4/ my-project/    # GitHub-native
 
-```
-.
-├── docs/                          # YOUR PROJECT DOCS (fill these in)
-│   ├── ARCHITECTURE.md            # Your app's architecture
-│   ├── PROJECT-STRUCTURE.md       # Your project's composition
-│   └── JOB-BOARD.md              # Sprint tracking (Todo / Doing / Done)
-│
-├── framework/                     # THE 7D SYSTEM (pre-filled, rarely changed)
-│   ├── FRAMEWORK.md               # 7D lifecycle and principles
-│   ├── AGENT-GUIDANCE.md          # AI agent prompts per phase
-│   ├── AGENT-AUTOMATION.md        # Automated agent configuration and overrides
-│   ├── DUAL-TRACK-SPRINTS.md      # Sprint structure and checkpoints
-│   ├── METRICS.md                 # Velocity and quality metrics
-│   ├── CHEATSHEET.md              # Quick reference
-│   ├── CEREMONIES.md              # Sprint ceremonies
-│   ├── DEFINITION-OF-READY.md     # Phase entry criteria
-│   ├── DEFINITION-OF-DONE.md      # Phase exit criteria
-│   ├── BACKLOG-INTAKE.md          # Triage process
-│   └── DEPENDENCY-ESCALATION.md   # Blocker handling
-│
-├── setup/                         # CONFIGURATION (run once after forking)
-│   ├── GITHUB-SETUP.md            # GitHub Projects setup guide
-│   ├── TEAM.md                    # Team roles and checkpoint ownership
-│   ├── LABELS.md                  # Label reference
-│   └── scripts/
-│       ├── setup-labels.sh        # Create all labels via gh CLI
-│       └── setup-project.sh       # Create GitHub Projects
-│
-└── .github/                       # GITHUB INFRASTRUCTURE
-    ├── ISSUE_TEMPLATE/            # Issue templates for all 7 phases + feature/bug
-    ├── PULL_REQUEST_TEMPLATE.md   # PR checklist
-    ├── scripts/                   # Agent automation scripts
-    │   ├── agent-prompts.js       # LLM prompt builder and API caller
-    │   └── phase-config.json      # Phase sequence and threshold config
-    └── workflows/                 # Automation (agent worker, tracking, labels)
+# Fill in the templates with your project details
+# Replace [placeholders] with real content
 ```
 
----
+### Option 2: Use the Claude skill (recommended)
 
-## The Three Project Docs
+The skill walks you through assessment, picks the right level, and generates files filled in with your actual project details instead of placeholders.
 
-After forking, your first task is to fill in these three documents:
+**Claude Code (CLI):**
+```bash
+# Install the skill
+cp -r SevenD/skill/ ~/.claude/skills/SevenD/
 
-### 1. [Architecture](docs/ARCHITECTURE.md) — What doesn't change easily
+# Start a conversation
+claude
 
-Your application's problem space, solution approach, system design, tech stack, and data model. This is the stable foundation that all 7D phases build on.
+# The skill triggers automatically when you say:
+# "set up my project" / "add a feature" / "sprint review"
+```
 
-### 2. [Project Structure](docs/PROJECT-STRUCTURE.md) — How the project is composed
+**Claude.ai (Projects):**
+1. Create a new Project in Claude.ai
+2. Paste the contents of `skill/project-instructions.md` into **Custom Instructions**
+3. Upload these 6 files to **Project Knowledge**:
+   - `skill/SKILL.md`
+   - `skill/7Dkb.md`
+   - `skill/templates.md`
+   - `skill/levels-overview.md`
+   - `skill/ide-rules-format.md`
+   - `skill/upgrade-paths.md`
+4. Start a conversation: "Help me set up my project"
 
-Your repository layout, key directories, entry points, dependencies, and build/run instructions. The map of your codebase.
+## The 7 Ds
 
-### 3. [Job Board](docs/JOB-BOARD.md) — Todo / Doing / Done
+| Phase | Loop | What happens |
+|-------|------|-------------|
+| **Discovery** | Product | Identify what to build and why |
+| **Definition** | Product | Specify requirements and acceptance criteria |
+| **Design** | Product | Architect components, interfaces, standards |
+| **Documentation** | Bridge | Track status across all phases |
+| **Development** | Tech | Build it in time-boxed sprints |
+| **Diagnostics** | Tech | Verify correctness and quality |
+| **Deployment** | Tech | Ship, monitor, learn |
 
-Maps to your GitHub Projects boards. Tracks what's being shaped (Todo), what's in progress (Doing), and what's shipped (Done).
+Phase gates prevent premature advancement: no Design without approved Definition, no Development without completed Design, no Deployment without Diagnostics passing.
 
-| Status | Phases |
-|--------|--------|
-| **Todo** | Define, Design, Discover |
-| **Doing** | Document, Diagnose, Develop |
-| **Done** | Deploy, Done |
+## What the Skill Does
 
----
+The SevenD skill isn't just setup. It covers the full lifecycle:
 
-## Agent Automation
+- **Initial setup** -- Assess your project, recommend a level, generate customized files
+- **Feature workflow** -- Walk through all 7 phases for your level, pointing to exact files
+- **Sprint operations** -- Start sprints, run reviews, capture retrospectives
+- **Level upgrades** -- Migrate from one level to the next without losing content
+- **Agent debugging** -- Diagnose why your AI agent isn't following the framework
 
-The 7D Framework includes an automated AI agent that reviews checkpoints and advances items through phases:
+## Repo Structure
 
-- When an issue reaches a checkpoint, the agent calls Claude to assess the phase work
-- **High confidence (>= 80)**: Auto-advances to the next phase (Discovery phases only)
-- **Medium confidence (50-79)**: Approves but flags for human review
-- **Low confidence (< 50)**: Rejects and flags for human review
-- **Develop and Deploy phases always require human review**
-
-All agent actions are posted as transparent issue comments with full reasoning. Configure thresholds via repository variables. See [`framework/AGENT-AUTOMATION.md`](framework/AGENT-AUTOMATION.md) for details.
-
----
-
-## After Forking: Setup Checklist
-
-- [ ] Fill in [`docs/ARCHITECTURE.md`](docs/ARCHITECTURE.md) with your app's architecture
-- [ ] Fill in [`docs/PROJECT-STRUCTURE.md`](docs/PROJECT-STRUCTURE.md) with your repo layout
-- [ ] Fill in [`setup/TEAM.md`](setup/TEAM.md) with your team members and roles
-- [ ] Run [`setup/scripts/setup-labels.sh`](setup/scripts/setup-labels.sh) to create labels
-- [ ] Follow [`setup/GITHUB-SETUP.md`](setup/GITHUB-SETUP.md) to create project boards
-- [ ] Add `ANTHROPIC_API_KEY` secret for agent automation (see [`framework/AGENT-AUTOMATION.md`](framework/AGENT-AUTOMATION.md))
-- [ ] Update links in [`.github/ISSUE_TEMPLATE/config.yml`](.github/ISSUE_TEMPLATE/config.yml)
-- [ ] Create your first Feature issue to test the flow
-- [ ] Read [`framework/CHEATSHEET.md`](framework/CHEATSHEET.md) for a quick overview
-
----
+```
+SevenD/
+|-- level-1/           # Two files (Product.md + Tech.md + IDE rules)
+|-- level-2/           # Four files (+ Architecture, Resources, Project + IDE rules)
+|-- level-3/           # Seven folders (one per phase + Fix.md + IDE rules)
+|-- level-4/           # GitHub-native (issue templates, Actions, PR gates + IDE rules)
+|-- skill/             # Claude skill for guided setup and operations
+|   |-- SKILL.md               # Operating instructions
+|   |-- 7Dkb.md                # Methodology, vocabulary, conventions
+|   |-- templates.md           # File structures for all levels
+|   |-- levels-overview.md     # Decision matrix and file inventories
+|   |-- ide-rules-format.md    # IDE rule file format specs
+|   |-- upgrade-paths.md       # Level migration guides
+|   +-- project-instructions.md # Claude.ai project custom instructions
++-- README.md
+```
 
 ## License
 
-<!-- Choose your license. For open source templates, MIT or Apache 2.0 are common. -->
+MIT

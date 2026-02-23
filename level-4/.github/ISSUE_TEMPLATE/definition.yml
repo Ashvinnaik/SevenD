@@ -1,0 +1,59 @@
+name: "Definition — Requirements Spec"
+description: "Define detailed requirements for a Discovery backlog item."
+labels: ["7d:definition", "status:defining"]
+body:
+  - type: markdown
+    attributes:
+      value: |
+        ## Definition Phase
+        Turn a Discovery item into testable requirements. Every requirement needs acceptance criteria.
+
+  - type: input
+    id: discovery_issue
+    attributes:
+      label: "Discovery issue"
+      description: "Link to the Discovery issue this defines (e.g., #42)"
+      placeholder: "#42"
+    validations:
+      required: true
+
+  - type: textarea
+    id: functional_requirements
+    attributes:
+      label: "Functional requirements"
+      description: "What must the feature DO? Use checkboxes — each one becomes a test case."
+      value: |
+        - [ ] **F01:** [Requirement] → Acceptance: [How to verify]
+        - [ ] **F02:** [Requirement] → Acceptance: [How to verify]
+        - [ ] **F03:** [Requirement] → Acceptance: [How to verify]
+    validations:
+      required: true
+
+  - type: textarea
+    id: nonfunctional_requirements
+    attributes:
+      label: "Non-functional requirements"
+      description: "Performance, security, accessibility constraints."
+      value: |
+        - [ ] **N01:** [Requirement] → Metric: [Measurable target]
+      placeholder: "e.g., Login response time < 500ms at p95"
+
+  - type: textarea
+    id: user_stories
+    attributes:
+      label: "User stories (optional)"
+      description: "As a [user], I want to [action], so that [benefit]."
+
+  - type: textarea
+    id: constraints
+    attributes:
+      label: "Constraints"
+      description: "Browser support, compliance, technical limitations?"
+      placeholder: "e.g., Must work on Chrome, Firefox, Safari"
+
+  - type: textarea
+    id: edge_cases
+    attributes:
+      label: "Edge cases"
+      description: "What happens when things go wrong?"
+      placeholder: "e.g., What if email is already taken? What if password is too short?"
