@@ -453,80 +453,86 @@ Same header + Vision as Level 1, but the Backlog table gains a Feature Count col
 
 ---
 
-## Level 3: Seven Folders + Fix.md
+## Level 3: Seven Folders + reference/ + STATUS.md (April Release)
 
-Level 3 distributes content into folders numbered 01 through 07. Each folder has a single primary markdown file. Sprint files are one-per-week.
+Level 3 distributes content into phase folders (01-07), a `reference/` directory for stable docs, and STATUS.md for current state. Each phase folder has an INDEX.md and sprint files. Sprint files have Build and Bug sections — sprints close only at zero bugs.
 
-### 01-discovery/DISCOVERY.md
+### STATUS.md
 
-Same as Level 2 Product.md backlog section, but with `D-` prefix IDs (D-001, D-002). Includes: Backlog table, Open Questions, Stakeholders, and Out of Scope.
+Root-level dashboard. Active sprints, recently closed, blockers, next up, project health metrics.
 
-### 02-definition/DEFINITION.md
+### reference/ Directory
 
-Same requirements structure as Level 2, but each backlog item gets its own detailed spec. Uses D-001-F01 format. Includes: Functional requirements, non-functional requirements, edge cases, constraints, user stories, glossary.
+Stable documents that outlive any sprint:
 
-### 03-design/DESIGN.md
+- **ARCHITECTURE.md** — System architecture, stack, infrastructure, security, secrets
+- **COMPONENTS.md** — Component registry, naming conventions, dev standards, git workflow
+- **CONTRACTS.md** — Interface contracts, API shapes, endpoint registry, data flows
+- **DECISIONS.md** — Decision log (why X over Y), with structured entries
+- **AGENT.md** — AI agent rules, execution patterns, prohibited actions
+- **archive/** — Closed sprint files moved here to keep working directories clean
 
-Expands Level 2 Architecture.md. Adds:
-- **Component Registry** (absorbs Resources.md from L2)
-- Design Review Checklist
-- More detailed data models and interface contracts
+### Phase INDEX.md (all seven folders)
 
-### 04-documentation/DOCUMENTATION.md
+Each phase folder has an INDEX.md with:
+- Phase purpose (one line)
+- Sprint table: Sprint | Goal | File | Status | Bugs | Archived
+- Phase-specific output table (what this phase produces)
 
-NEW at Level 3 — the bridge file. Contains the **Product Status Board**:
+### Sprint Files (universal pattern)
 
-```markdown
-| ID | Item | Discovery | Definition | Design | Development | Diagnostics | Deployment |
-|----|------|-----------|------------|--------|-------------|-------------|------------|
-| D-001 | [Item] | Done | Approved | Done | Sprint 1 | Pass | v0.1 |
-| D-002 | [Item] | Done | In Progress | — | — | — | — |
-```
-
-Plus: Document Index, Team, Changelog.
-
-### 05-development/INDEX.md
-
-Sprint schedule table + dev setup + active work tracker + commands.
-
-### 05-development/sprint-NN.md
+Every sprint file follows this structure, adapted per phase:
 
 ```markdown
-# Sprint [NN] — [Goal]
+# D[N]-Sprint[N] — [Goal]
 
-**Dates:** [Start] → [End]
+**Phase:** [Phase name]
+**Status:** [Active / Closed]
+**Opened:** [YYYY-MM-DD]
+**Closed:** [YYYY-MM-DD]
 
-## Tasks
+---
 
-| Task | Owner | Def ID | Branch | Status | Notes |
-|------|-------|--------|--------|--------|-------|
-| [Task] | [Name] | D-001-F02 | `feat/login` | Todo | |
+## Sprint Goal
 
-## Daily Log
+[One paragraph]
 
-### YYYY-MM-DD
-- [What happened]
+---
 
-## Sprint Review
+## Build
 
-- **Velocity:** [completed / planned]
-- **Carried over:** [items + reason]
-- **What went well:**
-- **What didn't:**
-- **Action items for next sprint:**
+<!-- Phase-specific work produced this sprint -->
+[Tables and content specific to the phase]
+
+---
+
+## Bug
+
+<!-- Issues found during this sprint. Sprint closes at zero. -->
+
+| ID | Description | Severity | Status | Resolution |
+|----|-------------|----------|--------|------------|
+| | | [High / Medium / Low] | [Open / Fixed] | |
+
+**Open bugs: [0]** — Sprint closes when this hits zero.
+
+---
+
+## Sprint Report
+
+<!-- Fill on close -->
+[Phase-specific metrics + Key learning]
 ```
 
-### 06-diagnostics/DIAGNOSTICS.md
+### Phase-Specific Build Sections
 
-Test matrix (mapping Definition IDs to tests), code quality checks, test run log, post-deploy health checks, issue tracking, quality metrics, checklists.
-
-### 07-deployment/DEPLOYMENT.md
-
-Deployment strategy, environments table, deployment checklist (before/during/after), deployment log, rollback procedure, infrastructure/services, domain/DNS, secrets management, release versioning.
-
-### Fix.md
-
-Shared error log: Open Issues table, Resolved section (with root cause, fix, failed attempts, lesson), Common Errors table.
+**D1 (Discovery):** Research findings table, backlog items produced, out of scope, open questions
+**D2 (Definition):** Requirements specs (D-xxx-Fxx format), functional/non-functional, constraints, glossary
+**D3 (Design):** Tech stack, component designs with interfaces and data models, naming conventions, decisions made
+**D4 (Documentation):** Feature documentation, environment config, status board updates
+**D5 (Development):** Task table (task, assignee, requirement ID, branch, status), dev log, dependencies added
+**D6 (Diagnostics):** Test matrix, code quality checks, test run log
+**D7 (Deployment):** Pre-deploy checklist, deploy steps, post-deploy verification, rollback plan
 
 ---
 

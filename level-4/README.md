@@ -1,52 +1,66 @@
-# 7D Framework — Level 4: GitHub-Native
+# 7D Framework — Level 4: GitHub-Native (April Release)
 
-The 7D workflow running entirely on GitHub primitives. No extra tools, no API costs.
+The 7D workflow running on GitHub primitives plus a `reference/` directory for stable docs.
 
 ## How It Works
 
-Every 7D phase maps to a GitHub feature:
+GitHub features handle workflow. Reference docs handle institutional memory.
 
 ```
-PRODUCT LOOP                              TECH LOOP
-Issues          → Issues          → Issues         → PRs        → Actions CI  → Actions CD
-(7d:discovery)   (7d:definition)   (7d:design)      + Branches   (diagnostics)  (deploy)
-                                                     + Milestones
-                         ↕                                            ↕
-                  Projects Board (status sync)
-                         ↕
-                  Bug Issues (fix log)
+WORKFLOW (GitHub)                         REFERENCE (Markdown)
+Issues (Discovery, Definition, Design)   reference/ARCHITECTURE.md
+PRs + Branches (Development)             reference/COMPONENTS.md
+Actions CI (Diagnostics)                 reference/CONTRACTS.md
+Actions CD (Deployment)                  reference/DECISIONS.md
+Projects Board (Documentation/Status)    reference/AGENT.md
+Milestones (Sprints)                     reference/archive/
 ```
+
+### Sprint Model
+
+- Each **Milestone** is a sprint scoped to a phase
+- Issues within a milestone have Build work (features, tasks) and Bug work (issues, fixes)
+- A milestone closes only when all bugs are resolved (zero-bug close)
+- Closed milestone notes are archived in `reference/archive/`
 
 ## Setup
 
 ```bash
-# 1. Copy the .github/ folder into your repo
+# 1. Copy into your repo
 cp -r .github/ your-project/.github/
-
-# 2. Copy IDE rules
+cp -r reference/ your-project/reference/
+cp STATUS.md your-project/
 cp CLAUDE.md your-project/
 cp -r .cursor/ your-project/
 cp -r .windsurf/ your-project/
 
-# 3. Push to GitHub
+# 2. Push to GitHub
 cd your-project && git add -A && git commit -m "Add 7D Framework" && git push
 
-# 4. Run the setup script to create labels, milestones, and project board
+# 3. Run setup script for labels, milestones, and project board
 ./scripts/setup-github.sh
-# Or specify a repo:
-./scripts/setup-github.sh owner/repo-name
-
-# 5. Follow the manual steps printed by the script:
-#    - Enable branch protection
-#    - Create a Projects board
-#    - Uncomment your stack in the Actions workflows
 ```
 
 ## What You Get
 
-### Issue Templates (4 templates)
+### Reference Directory
 
-When anyone clicks "New Issue," they choose from:
+Stable documents that outlive any sprint:
+
+| File | Purpose |
+|------|---------|
+| `reference/ARCHITECTURE.md` | System architecture, stack, infrastructure |
+| `reference/COMPONENTS.md` | Component registry, naming conventions, dev standards |
+| `reference/CONTRACTS.md` | Interface contracts, API shapes, data flows |
+| `reference/DECISIONS.md` | Decision log — why X over Y |
+| `reference/AGENT.md` | AI agent rules and execution patterns |
+| `reference/archive/` | Closed sprint notes |
+
+### STATUS.md
+
+Single-glance project dashboard. Active sprints, blockers, health metrics.
+
+### Issue Templates (4 templates)
 
 | Template | 7D Phase | Creates Labels |
 |----------|----------|---------------|
@@ -55,70 +69,31 @@ When anyone clicks "New Issue," they choose from:
 | Design — Architecture Decision | Design | `7d:design`, `status:designing` |
 | Bug Report (Fix Log) | Diagnostics | `7d:diagnostics`, `type:bug` |
 
-Each template has required fields that enforce the 7D structure.
-
 ### PR Template
 
-Every PR includes a phase gate checklist:
-
-- Definition issue linked? Design issue exists?
-- Code follows Design conventions?
-- Tests written? Lint passing? Build succeeds?
-- Components registered? Docs updated?
-
-All boxes must be checked before merge.
+Phase gate checklist: Definition linked, Design exists, tests pass, components registered.
 
 ### Actions Workflows
 
-**Diagnostics** (`diagnostics.yml`) — Runs on every PR:
-- Lint, test, build (uncomment your stack's commands)
-- "Diagnostics Gate" job — all checks must pass
+**Diagnostics** (`diagnostics.yml`) — Runs on every PR: lint, test, build.
+**Deploy** (`deploy.yml`) — Runs on merge to main: deploy, health check, auto-tag.
 
-**Deploy** (`deploy.yml`) — Runs on merge to main:
-- Deploy to production (uncomment your provider)
-- Post-deploy health check
-- Auto-tag release
+### Labels, Milestones, Projects Board
 
-### Labels (18 labels)
-
-7D phase labels, status labels, priority labels, and type labels — all created by the setup script.
-
-### Sprint Milestones
-
-4 weekly sprint milestones created by the setup script. Assign issues to milestones to plan sprints.
+Created by setup script. See `scripts/setup-github.sh`.
 
 ## The Flow
 
-1. **Someone has an idea** → Create a Discovery issue
-2. **Ready to specify** → Create a Definition issue linking to it
-3. **Ready to design** → Create a Design issue linking to the Definition
-4. **Ready to build** → Label `status:ready`, assign to sprint Milestone
-5. **Building** → Create branch, write code, open PR
-6. **Verifying** → Actions CI runs automatically, PR checklist enforced
-7. **Shipping** → Merge to main, Actions deploy, health check, auto-tag
-8. **Something breaks** → Create Bug issue with error details
-9. **Status tracking** → Move issues across Projects board columns
-
-## Branch Protection (Manual Setup)
-
-Go to Settings → Branches → Add rule for `main`:
-
-- Require pull request reviews before merging
-- Require status checks to pass: select "Diagnostics Gate"
-- Require branches to be up to date before merging
-
-This makes the Diagnostics Actions workflow a hard gate — no one can merge code that doesn't pass lint, tests, and build.
-
-## Projects Board (Manual Setup)
-
-Create a board-style project with these columns:
-
-```
-Backlog → Defining → Designing → Ready → In Progress → Review → Done
-```
-
-This IS the Documentation phase — the Projects board is the status board.
+1. **Idea** → Create Discovery issue
+2. **Specify** → Create Definition issue
+3. **Design** → Create Design issue, update `reference/` docs
+4. **Build** → Create milestone (sprint), assign issues, branch + PR
+5. **Verify** → Actions CI runs, PR checklist enforced
+6. **Ship** → Merge to main, Actions deploy
+7. **Bug** → Create Bug issue, assign to current milestone
+8. **Close sprint** → All bugs at zero, close milestone, archive notes
+9. **Track** → Projects board columns + STATUS.md
 
 ## Combining with Level 3
 
-Level 4 works great alongside Level 3's markdown files. Use GitHub for team coordination (issues, PRs, sprints) and keep the detailed specs in the 7D folders for AI agent context. The IDE rules in Level 4 point agents to GitHub issues instead of markdown files.
+Level 4 works alongside Level 3's phase folders. Use GitHub for team coordination (issues, PRs, milestones) and keep detailed sprint files in the 7D phase folders for AI agent context. Both levels share the same `reference/` directory.

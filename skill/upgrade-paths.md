@@ -36,63 +36,73 @@
 
 ---
 
-## Level 2 → Level 3
+## Level 2 → Level 3 (April Release)
 
 ### What Changes
-- Four files expand into seven folders
-- Sprint tracking moves from a section in Project.md to dedicated sprint files
-- Each phase gets its own focused document
-- Fix Log becomes a root-level shared file
+- Four files expand into seven phase folders + `reference/` directory + STATUS.md
+- Sprint tracking moves from a section in Project.md to per-phase sprint files with Build + Bug sections
+- Stable documents (architecture, components, contracts) move to `reference/`
+- Fix Log is replaced by Bug sections within each sprint file
+- Sprints close only when bugs hit zero; closed sprints archive to `reference/archive/`
 
 ### Migration Steps
 
-1. **Product.md splits into two folders:**
-   - Backlog, priorities, out of scope → `01-discovery/DISCOVERY.md`
-   - Requirements, acceptance criteria → `02-definition/DEFINITION.md`
+1. **Create STATUS.md** at project root — active sprints, blockers, project health
 
-2. **Architecture.md becomes a folder:**
-   - Full architecture → `03-design/DESIGN.md`
-   - Expand: Add component designs with interfaces and data models
-   - Add: Design review checklist, security section
+2. **Create `reference/` directory:**
+   - Architecture.md stack + security → `reference/ARCHITECTURE.md`
+   - Architecture.md components + naming → `reference/COMPONENTS.md`
+   - Architecture.md API contract → `reference/CONTRACTS.md`
+   - Architecture.md Design Decisions Log → `reference/DECISIONS.md`
+   - Create `reference/AGENT.md` for AI agent rules
+   - Create `reference/archive/` for closed sprints
 
-3. **Create the bridge file:**
-   - `04-documentation/DOCUMENTATION.md` — Build the Product Status Board
-   - Map every Discovery item across all phases (Definition, Design, Development, Diagnostics, Deployed)
-   - This is NEW content — synthesized from the state of all four Level 2 files
+3. **Product.md splits into two phase folders:**
+   - Backlog, priorities, out of scope → `01-discovery/INDEX.md` + `D1-Sprint1.md`
+   - Requirements, acceptance criteria → `02-definition/INDEX.md` + `D2-Sprint1.md`
 
-4. **Project.md splits into three folders:**
-   - Sprint tasks, development log → `05-development/INDEX.md` + `sprint-NN.md`
-   - Diagnostics, test coverage → `06-diagnostics/DIAGNOSTICS.md`
-   - Deployment log, environments → `07-deployment/DEPLOYMENT.md`
+4. **Architecture.md becomes design sprints:**
+   - Component designs → `03-design/INDEX.md` + `D3-Sprint1.md`
+   - Stable outputs (stack, registry, contracts) → already in `reference/`
 
-5. **Resources.md content gets absorbed:**
-   - Component registry → `03-design/DESIGN.md` (components section)
-   - Environments, infrastructure → `07-deployment/DEPLOYMENT.md`
-   - Dependencies → `03-design/DESIGN.md` or sprint files
+5. **Create the Documentation INDEX:**
+   - `04-documentation/INDEX.md` — Build the Product Status Board
+   - Map every Discovery item across all phases
+   - Create sprint files for major documentation efforts
 
-6. **Fix Log becomes root-level:**
-   - Project.md Fix Log → `Fix.md`
-   - Expand: Add open issues, resolved with root cause, common errors sections
+6. **Project.md splits into three phase folders:**
+   - Sprint tasks, dev log → `05-development/INDEX.md` + `D5-Sprint1.md`
+   - Test coverage, checks → `06-diagnostics/INDEX.md` + `D6-Sprint1.md`
+   - Deploy log, environments → `07-deployment/INDEX.md` + `D7-Sprint1.md`
 
-7. **Update IDE rules** — Replace Level 2 rules with Level 3 rules
+7. **Resources.md content gets absorbed:**
+   - Component registry → `reference/COMPONENTS.md`
+   - Environments, infrastructure → `reference/ARCHITECTURE.md`
+   - Dependencies → sprint files or `reference/COMPONENTS.md`
+
+8. **Fix Log migrates to sprint Bug sections:**
+   - Open issues → Bug section of the relevant active sprint
+   - Common errors → first Development sprint's Bug section
+   - Resolved issues → already in closed sprint archives
+
+9. **Update IDE rules** — Replace Level 2 rules with Level 3 rules
 
 ### What to Watch For
-- The Documentation Status Board is the hardest new file — it requires mapping all items across all phases
-- Resources.md doesn't map 1:1 — component registry goes to Design, infra goes to Deployment
-- Sprint files need to be small — if the current sprint section in Project.md is large, split into weekly files
+- The Documentation Status Board requires mapping all items across all phases
+- Resources.md doesn't map 1:1 — registry goes to reference/COMPONENTS.md, infra to reference/ARCHITECTURE.md
+- Every sprint file needs both Build AND Bug sections — don't skip the Bug section even if empty
 
 ---
 
-## Level 3 → Level 4
+## Level 3 → Level 4 (April Release)
 
 ### What Changes
-- Markdown files for the Product Loop (Discovery, Definition, Design) become GitHub Issues
-- Sprint files become GitHub Milestones
-- Documentation status board becomes GitHub Projects board
-- Diagnostics becomes automated via GitHub Actions
-- Deployment becomes automated via GitHub Actions
-- Fix.md becomes Bug issues
-- Design.md and DOCUMENTATION.md may stay as local files alongside GitHub Issues
+- Phase sprint files (D1-Sprint1, etc.) become GitHub Issues + Milestones
+- Documentation INDEX status board becomes GitHub Projects board
+- Diagnostics and Deployment become automated via GitHub Actions
+- Sprint Bug sections become Bug issues
+- `reference/` directory STAYS — it's shared between Level 3 and Level 4
+- STATUS.md STAYS — updated alongside the Projects board
 
 ### Migration Steps
 
@@ -103,56 +113,46 @@
    ```
    This creates: 18 labels, 4 sprint milestones
 
-2. **Migrate Discovery backlog → GitHub Issues:**
-   - For each item in `01-discovery/DISCOVERY.md`:
+2. **Keep `reference/` as-is** — Level 4 uses the same reference directory
+
+3. **Migrate Discovery backlog → GitHub Issues:**
+   - For each item in `01-discovery/INDEX.md`:
      ```bash
      gh issue create --title "D-001: [Item]" --label "7d:discovery,priority:must" --body "..."
      ```
-   - Use the Discovery issue template for structure
 
-3. **Migrate Definition specs → GitHub Issues:**
-   - For each defined requirement:
-     ```bash
-     gh issue create --title "DEF: [Item] Requirements" --label "7d:definition" --body "..."
-     ```
-   - Link to the Discovery issue in the body
-   - Use the Definition issue template for structure
+4. **Migrate Definition specs → GitHub Issues:**
+   - For each defined requirement, create a Definition issue linking to Discovery
 
-4. **Migrate Design specs → GitHub Issues:**
-   - For each designed component:
-     ```bash
-     gh issue create --title "DESIGN: [Component]" --label "7d:design" --body "..."
-     ```
-   - Link to the Definition issue
-   - Use the Design issue template
+5. **Migrate Design specs → GitHub Issues:**
+   - For each designed component, create a Design issue linking to Definition
 
-5. **Set up GitHub Projects board:**
+6. **Set up GitHub Projects board:**
    - Create board with columns: Backlog | Defining | Designing | Ready | In Progress | Review | Done
-   - Add all migrated issues to the board
-   - Position in correct column based on current status
+   - Add all migrated issues, position in correct column
 
-6. **Configure Actions workflows:**
-   - Edit `.github/workflows/diagnostics.yml` — uncomment your stack, add actual commands
+7. **Configure Actions workflows:**
+   - Edit `.github/workflows/diagnostics.yml` — uncomment your stack
    - Edit `.github/workflows/deploy.yml` — configure your hosting provider
 
-7. **Migrate Fix Log → Bug Issues:**
-   - Open issues from Fix.md become Bug issues
-   - Resolved issues become closed Bug issues (with fix and lesson learned)
+8. **Migrate open bugs → Bug Issues:**
+   - Open bugs from sprint files become Bug issues
+   - Resolved bugs in archived sprints can stay in archives
 
-8. **Set up branch protection:**
+9. **Set up branch protection:**
    - Settings → Branches → Add rule for `main`
    - Require PR, require "Diagnostics Gate" status check, require approval
 
-9. **Keep or archive local files:**
-   - DESIGN.md can stay as a local detailed reference alongside Design issues
-   - DOCUMENTATION.md can be replaced entirely by the Projects board
-   - Sprint files are replaced by Milestones
-   - Fix.md is replaced by Bug issues
+10. **Archive or remove phase folders:**
+    - Phase folders (01-07) can be removed — GitHub Issues replace them
+    - Archive closed sprint files to `reference/archive/` before removing folders
+    - Keep STATUS.md and `reference/` directory
 
-10. **Update IDE rules** — Replace Level 3 rules with Level 4 rules
+11. **Update IDE rules** — Replace Level 3 rules with Level 4 rules
 
 ### What to Watch For
-- Don't lose detail in the migration — GitHub issue bodies can hold the full spec content
+- Don't lose detail in the migration — GitHub issue bodies can hold full spec content
 - The Projects board needs manual setup — the script can't create it via API
 - Branch protection must be configured manually
 - Test the Actions workflows with a dummy PR before migrating real work
+- `reference/` stays local even when everything else moves to GitHub

@@ -114,15 +114,19 @@ Core terms used throughout the framework. When generating files, use these terms
 |------|-----------|
 | **Backlog** | Prioritized list of things to build, maintained in Discovery |
 | **Component** | A named, independently buildable part of the system (service, page, model, pipeline) |
-| **Component Registry** | Canonical list of every named component — prevents AI agents from inventing duplicates. Lives in Resources.md (L2) or DESIGN.md (L3+) |
-| **Fix Log** | Running record of errors, root causes, and fixes. Institutional memory. In Tech.md (L1), Project.md (L2), Fix.md (L3), Bug issues (L4) |
+| **Component Registry** | Canonical list of every named component — prevents AI agents from inventing duplicates. Lives in Resources.md (L2) or `reference/COMPONENTS.md` (L3+) |
+| **Fix Log / Bug Section** | Running record of errors, root causes, and fixes. In Tech.md (L1), Project.md (L2), sprint Bug sections (L3), Bug issues (L4) |
+| **Reference Directory** | Stable documents that outlive sprints: architecture, components, contracts, decisions, agent rules. Level 3+ only |
+| **Sprint Close** | A sprint can only close when its Bug section reaches zero open bugs |
+| **Archive** | Where closed sprints go (`reference/archive/`). Keeps working directories clean |
 | **Invariant Layer** | The parts of 7D that never change: phases, gates, loops, feedback, AI/Human synergy |
 | **Variant Layer** | The parts that adapt per project: components, interfaces, constraints, terminology, metrics |
 | **Phase Gate** | A checkpoint requiring human approval before work advances to the next phase |
 | **Product Loop** | Discovery → Definition → Design. Figures out what to build |
 | **Tech Loop** | Development → Diagnostics → Deployment. Builds, verifies, ships |
-| **Sprint** | A time-boxed work cycle (default: 1 week). One sprint file per cycle at Level 3 |
-| **Status Board** | A table in Documentation tracking every item across all 7 phases. The single source of truth for project state |
+| **Sprint** | A time-boxed work cycle (default: 1 week). At Level 3, each phase can have sprints (D1-Sprint1, D5-Sprint2, etc.). Sprints have Build and Bug sections |
+| **STATUS.md** | Root-level dashboard showing active sprints, blockers, and project health at a glance. Level 3+ |
+| **Status Board** | A table in Documentation INDEX tracking every item across all 7 phases. The single source of truth for feature progress |
 | **IDE Rules** | The file that onboards the AI agent to the project — tells it what to read, how to work, what not to do |
 
 ---

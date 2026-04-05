@@ -1,16 +1,15 @@
 # 05 — Development Index
 
-> Sprint-based development tracker. Each sprint gets its own file.
-> AI agents: read the current sprint file for your active tasks.
+> Build it. Sprint-based development tracker.
+> Each sprint gets its own file with Build and Bug sections.
 
 ---
 
-## Sprint Schedule
+## Sprints
 
-| Sprint | Dates | Goal | File | Status |
-|--------|-------|------|------|--------|
-| 1 | [Start → End] | [One-sentence goal] | `sprint-01.md` | [Active / Complete] |
-| 2 | [Start → End] | [Goal] | `sprint-02.md` | [Planned / Active / Complete] |
+| Sprint | Goal | File | Status | Bugs | Archived |
+|--------|------|------|--------|------|----------|
+| 1 | [e.g., Scaffold project + auth API] | `D5-Sprint1.md` | [Active / Closed] | 0 | — |
 
 ---
 
@@ -31,19 +30,7 @@ cp .env.example .env
 [e.g., npm run dev]
 ```
 
----
-
-## Active Work
-
-<!-- Which team members are working on what RIGHT NOW. Prevents collisions. -->
-
-| Person / Agent | Sprint | Task | Branch | Status |
-|----------------|--------|------|--------|--------|
-| | | | | |
-
----
-
-## Commands
+### Commands
 
 ```bash
 # Dev server

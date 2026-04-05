@@ -153,7 +153,7 @@ For Level 1 (Product.md + Tech.md): Fill in vision, backlog with real IDs (P-001
 
 For Level 2 (+ Architecture.md + Resources.md + Project.md): Add components with interfaces and data models, naming conventions, component registry, environment details, sprint 1 with real tasks, test coverage matrix.
 
-For Level 3 (seven folders): Distribute across folders. Fill in Discovery backlog, Definition requirements for Must Haves, full architecture in Design (including Component Registry), Documentation status board, sprint-01 with tasks, diagnostics test matrix, deployment strategy. Seed Fix.md with common errors for their stack.
+For Level 3 (seven folders + reference/): Create STATUS.md at root. Create `reference/` with ARCHITECTURE.md, COMPONENTS.md, CONTRACTS.md, DECISIONS.md, AGENT.md, and archive/ subdirectory. Create INDEX.md in each phase folder linking to sprint files. Create D1-Sprint1.md through D7-Sprint1.md with Build and Bug sections. Fill in Discovery backlog, Definition requirements for Must Haves, architecture in reference/ARCHITECTURE.md, component registry in reference/COMPONENTS.md, interface contracts in reference/CONTRACTS.md, agent rules in reference/AGENT.md. Seed common errors for their stack in the first Development sprint's Bug section.
 
 For Level 4 (GitHub-native): Customize issue template fields for their domain, PR template with stack-specific items, diagnostics.yml for their stack, deploy.yml for their hosting, setup-github.sh ready to run.
 
@@ -193,13 +193,13 @@ When a user wants to add a feature, walk them through the full 7D path. This is 
 
 **1. Discovery** — Add to backlog
 - Level 1-2: Add row to Product.md backlog table with next ID
-- Level 3: Add to `01-discovery/DISCOVERY.md` backlog
+- Level 3: Add to `01-discovery/INDEX.md` phase output table. If starting new discovery work, create a new sprint file (D1-SprintN.md)
 - Level 4: Create a Discovery issue using the template
 
 **2. Definition** — Write requirements
 - Level 1: Add acceptance criteria under the backlog item in Product.md
 - Level 2: Add functional/non-functional requirements section in Product.md
-- Level 3: Add spec to `02-definition/DEFINITION.md` (or separate file for complex items)
+- Level 3: Create or update a sprint file in `02-definition/` (D2-SprintN.md). Add spec to the Build section.
 - Level 4: Create a Definition issue, link to Discovery issue
 
 GATE: Requirements need human approval before proceeding to Design.
@@ -207,26 +207,26 @@ GATE: Requirements need human approval before proceeding to Design.
 **3. Design** — Technical blueprint
 - Level 1: Add to Design Decisions in Product.md
 - Level 2: Add component to Architecture.md, register in Resources.md
-- Level 3: Add to `03-design/DESIGN.md`, update Component Registry
-- Level 4: Create a Design issue, link to Definition issue
+- Level 3: Create or update a sprint file in `03-design/` (D3-SprintN.md). On sprint close, commit stable outputs to `reference/` (ARCHITECTURE.md, COMPONENTS.md, CONTRACTS.md, DECISIONS.md)
+- Level 4: Create a Design issue, link to Definition issue. Update `reference/` docs.
 
 GATE: Design needs human approval before Development starts.
 
 **4. Documentation** — Update status
 - Level 1-2: Update status column in backlog table
-- Level 3: Update `04-documentation/DOCUMENTATION.md` status board
+- Level 3: Update `04-documentation/INDEX.md` Product Status Board. Create sprint files for major documentation efforts.
 - Level 4: Move issue on Projects board
 
 **5. Development** — Code it
 - Level 1: Just build, note in Tech.md
 - Level 2: Add task to current sprint in Project.md
-- Level 3: Add task to current sprint file in `05-development/`
+- Level 3: Create or update sprint file in `05-development/` (D5-SprintN.md). Track tasks in Build section, errors in Bug section. Sprint closes at zero bugs.
 - Level 4: Assign to current Milestone, create branch
 
 **6. Diagnostics** — Verify
 - Level 1: Run tests, log in Tech.md
 - Level 2: Run pre-deploy checks, update Test Coverage in Project.md
-- Level 3: Update `06-diagnostics/DIAGNOSTICS.md`
+- Level 3: Create or update sprint file in `06-diagnostics/` (D6-SprintN.md). Log test results in Build, failures in Bug.
 - Level 4: CI runs automatically on PR
 
 GATE: Tests must pass before deployment.
@@ -234,10 +234,10 @@ GATE: Tests must pass before deployment.
 **7. Deployment** — Ship it
 - Level 1: Deploy, log in Tech.md
 - Level 2: Log in Project.md deployment section
-- Level 3: Update `07-deployment/DEPLOYMENT.md`
+- Level 3: Create or update sprint file in `07-deployment/` (D7-SprintN.md). Post-deploy issues go in Bug section.
 - Level 4: Merge PR, Actions deploy automatically
 
-**After deployment:** Log any errors in Fix Log. Outcomes feed back into Discovery.
+**After deployment:** Update STATUS.md. Archive closed sprints to `reference/archive/`. Outcomes feed back into Discovery.
 
 Show the user which specific files to update at each step. Don't just describe the process — point to exact file paths and table rows.
 
@@ -247,25 +247,37 @@ Show the user which specific files to update at each step. Don't just describe t
 
 ### Starting a Sprint
 
-1. Read the previous sprint's carried-over tasks
+1. Read the previous sprint's carried-over tasks (if any)
 2. Pull ready items from the backlog (Definition status = Approved, Design = Done)
 3. Create tasks with IDs linking back to backlog items
 4. Set the sprint goal (one sentence: what does "done" look like?)
 5. Assign tasks to team members
 
 **Level 2:** Add sprint section to Project.md
-**Level 3:** Create new `05-development/sprint-NN.md` from template
-**Level 4:** Create new Milestone, assign issues
+**Level 3:** Create new sprint file in the relevant phase folder (e.g., `05-development/D5-Sprint2.md`). Update the phase INDEX.md with the new sprint row. Update STATUS.md.
+**Level 4:** Create new Milestone, assign issues. Update STATUS.md.
+
+### Closing a Sprint
+
+A sprint closes ONLY when the Bug section reaches zero open bugs.
+
+1. Verify all bugs are resolved (zero-bug close)
+2. Fill in the Sprint Report section at the bottom of the sprint file
+3. Update the phase INDEX.md: set Status to Closed
+4. Move the sprint file to `reference/archive/`
+5. Update STATUS.md: move from Active to Recently Closed
+6. Create the next sprint file if work continues
 
 ### Running a Sprint Review
 
 1. Read the current sprint file/milestone
 2. Count: planned vs completed vs carried over
 3. For each carried-over task, note why it didn't finish
-4. Fill in retrospective: what went well, what didn't, changes for next sprint
-5. Archive the sprint (mark complete)
-6. Create the next sprint file/milestone
-7. Update Documentation status board
+4. Check Bug section — can this sprint close? (zero bugs required)
+5. Fill in sprint report: tasks, bugs, duration, key learning
+6. Archive the sprint if bugs are at zero
+7. Create the next sprint file/milestone
+8. Update STATUS.md and Documentation status board
 
 ### Sprint Review Prompts
 
@@ -328,7 +340,7 @@ When a user's AI agent isn't following the framework, diagnose and fix.
 - Fix: Verify file location, check frontmatter, strengthen the "Before Building" instructions
 
 **"Agent keeps inventing names instead of using existing ones"**
-- Check: Is there a component registry? (Resources.md at L2, DESIGN.md at L3)
+- Check: Is there a component registry? (Resources.md at L2, `reference/COMPONENTS.md` at L3+)
 - Check: Do the IDE rules say "check the component registry before creating anything new"?
 - Fix: Add or populate the registry. Add explicit instruction to IDE rules.
 
@@ -338,7 +350,7 @@ When a user's AI agent isn't following the framework, diagnose and fix.
 - Fix: Strengthen gate language. "These are hard rules. Do not skip phases." works better than "try to follow the phases."
 
 **"Agent produces inconsistent code style"**
-- Check: Are naming conventions documented? (Architecture.md at L2, DESIGN.md at L3)
+- Check: Are naming conventions documented? (Architecture.md at L2, `reference/COMPONENTS.md` at L3)
 - Check: Are code standards in the IDE rules?
 - Fix: Add explicit conventions table and Don'ts list.
 
@@ -366,9 +378,9 @@ Apply these when making decisions or giving advice:
 
 2. **The IDE rules file is the most important file.** It's the AI agent's onboarding document. If you fix one thing, fix the rules file. If the agent misbehaves, check the rules file first.
 
-3. **The Component Registry prevents name invention.** AI agents' most common failure is creating new names instead of looking up existing ones. At Level 2+, always populate the registry during setup and tell the user to keep it current. Lives in Resources.md (L2) or DESIGN.md (L3+).
+3. **The Component Registry prevents name invention.** AI agents' most common failure is creating new names instead of looking up existing ones. At Level 2+, always populate the registry during setup and tell the user to keep it current. Lives in Resources.md (L2) or `reference/COMPONENTS.md` (L3+).
 
-4. **Seed the Fix Log on day one.** Pre-populate Common Errors with 3-5 known issues for the user's stack (see Common Stacks section). Every error logged is an error the agent won't debug from scratch again.
+4. **Seed the first sprint's Bug section on day one.** Pre-populate with 3-5 known issues for the user's stack (see Common Stacks section). Every error logged is an error the agent won't debug from scratch again.
 
 5. **The Invariant Layer is sacred.** Never skip phases, remove gates, or break the feedback loop when customizing. If a user asks to remove a phase, explain what breaks without it and offer to simplify it instead.
 

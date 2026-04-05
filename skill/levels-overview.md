@@ -37,25 +37,44 @@ CLAUDE.md
 .github/copilot-instructions.md
 ```
 
-### Level 3 (16 files)
+### Level 3 (April Release — 24+ files)
 ```
-01-discovery/DISCOVERY.md
-02-definition/DEFINITION.md
-03-design/DESIGN.md
-04-documentation/DOCUMENTATION.md
+STATUS.md
+reference/ARCHITECTURE.md
+reference/COMPONENTS.md
+reference/CONTRACTS.md
+reference/DECISIONS.md
+reference/AGENT.md
+reference/archive/README.md
+01-discovery/INDEX.md
+01-discovery/D1-Sprint1.md
+02-definition/INDEX.md
+02-definition/D2-Sprint1.md
+03-design/INDEX.md
+03-design/D3-Sprint1.md
+04-documentation/INDEX.md
+04-documentation/D4-Sprint1.md
 05-development/INDEX.md
-05-development/sprint-01.md
-06-diagnostics/DIAGNOSTICS.md
-07-deployment/DEPLOYMENT.md
-Fix.md
+05-development/D5-Sprint1.md
+06-diagnostics/INDEX.md
+06-diagnostics/D6-Sprint1.md
+07-deployment/INDEX.md
+07-deployment/D7-Sprint1.md
 CLAUDE.md
 .cursor/rules/7d-framework.mdc
 .windsurf/rules/7d-framework.md
 .github/copilot-instructions.md
 ```
 
-### Level 4 (15 files)
+### Level 4 (April Release — 22+ files)
 ```
+STATUS.md
+reference/ARCHITECTURE.md
+reference/COMPONENTS.md
+reference/CONTRACTS.md
+reference/DECISIONS.md
+reference/AGENT.md
+reference/archive/README.md
 .github/ISSUE_TEMPLATE/discovery.yml
 .github/ISSUE_TEMPLATE/definition.yml
 .github/ISSUE_TEMPLATE/design.yml
