@@ -1,0 +1,243 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>SevenD — A framework for building software with AI agents</title>
+<meta name="description" content="SevenD is a progressive framework for building software with AI coding agents. Structure your project so AI knows what to read, what to build, and when to stop and ask.">
+<meta property="og:title" content="SevenD — Human-AI collaboration framework">
+<meta property="og:description" content="AI agents write code fast. SevenD makes sure they build the right thing, in the right order, and know when to stop and ask.">
+<meta property="og:image" content="assets/7d-loop.svg">
+<meta name="twitter:card" content="summary_large_image">
+<link rel="icon" type="image/png" href="assets/logo.png">
+<style>
+  :root{
+    --bg:#0d1117; --panel:#161b22; --panel2:#1c2230; --border:#283041;
+    --text:#e6edf3; --muted:#9aa7b4; --accent:#8250df; --accent2:#1d76db;
+    --d1:#1d76db; --d2:#5319e7; --d3:#0075ca; --d4:#006b75; --d5:#0e8a16; --d6:#bf8700; --d7:#d93f0b;
+    --maxw:1080px;
+  }
+  *{box-sizing:border-box}
+  html{scroll-behavior:smooth}
+  body{margin:0;background:var(--bg);color:var(--text);
+    font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",Helvetica,Arial,sans-serif;
+    line-height:1.6;-webkit-font-smoothing:antialiased;}
+  a{color:var(--accent2);text-decoration:none}
+  a:hover{text-decoration:underline}
+  .wrap{max-width:var(--maxw);margin:0 auto;padding:0 24px}
+  section{padding:72px 0;border-top:1px solid var(--border)}
+  h2{font-size:1.9rem;margin:0 0 8px;letter-spacing:-.02em}
+  .lead{color:var(--muted);font-size:1.08rem;max-width:680px}
+
+  /* nav */
+  nav{position:sticky;top:0;z-index:20;background:rgba(13,17,23,.82);
+    backdrop-filter:blur(10px);border-bottom:1px solid var(--border)}
+  nav .wrap{display:flex;align-items:center;gap:18px;height:60px}
+  nav .brand{display:flex;align-items:center;gap:10px;font-weight:700;color:var(--text)}
+  nav .brand img{height:28px;width:auto}
+  nav .links{margin-left:auto;display:flex;gap:22px;align-items:center}
+  nav .links a{color:var(--muted);font-size:.95rem}
+  nav .links a:hover{color:var(--text);text-decoration:none}
+  .btn{display:inline-block;padding:10px 18px;border-radius:10px;font-weight:600;font-size:.95rem;border:1px solid var(--border)}
+  .btn:hover{text-decoration:none}
+  .btn-primary{background:linear-gradient(135deg,var(--accent),var(--accent2));color:#fff;border:0}
+  .btn-ghost{background:var(--panel);color:var(--text)}
+
+  /* hero */
+  .hero{padding:88px 0 64px;text-align:center;background:
+    radial-gradient(900px 380px at 50% -120px,rgba(130,80,223,.22),transparent 70%);}
+  .hero img.logo{height:96px;width:auto;margin-bottom:22px;filter:drop-shadow(0 8px 28px rgba(0,0,0,.5))}
+  .hero h1{font-size:clamp(2.2rem,5vw,3.4rem);margin:0 0 14px;letter-spacing:-.03em;line-height:1.08}
+  .hero h1 .grad{background:linear-gradient(120deg,#a371f7,#1d76db);-webkit-background-clip:text;background-clip:text;color:transparent}
+  .hero .why{font-size:1.25rem;color:var(--text);max-width:720px;margin:0 auto 10px;font-weight:500}
+  .hero .sub{font-size:1.05rem;color:var(--muted);max-width:660px;margin:0 auto 30px}
+  .cta{display:flex;gap:14px;justify-content:center;flex-wrap:wrap}
+  .pill{display:inline-flex;gap:8px;align-items:center;margin-bottom:26px;padding:6px 14px;border:1px solid var(--border);
+    border-radius:999px;background:var(--panel);color:var(--muted);font-size:.85rem}
+  .pill .dot{width:7px;height:7px;border-radius:50%;background:#3fb950;box-shadow:0 0 0 3px rgba(63,185,80,.2)}
+
+  /* narrative */
+  .story{background:var(--panel);border:1px solid var(--border);border-radius:16px;padding:34px 32px;max-width:820px;margin:0 auto}
+  .story p{margin:0 0 14px;font-size:1.08rem}
+  .story p:last-child{margin-bottom:0}
+  .story .em{color:#f0c674}
+  .story .turn{color:var(--text);font-weight:600}
+
+  /* diagram */
+  .diagram{background:#fff;border-radius:16px;padding:26px;margin-top:8px}
+  .diagram img{width:100%;height:auto;display:block}
+
+  /* phase grid */
+  .grid{display:grid;gap:16px;margin-top:34px}
+  .phases{grid-template-columns:repeat(auto-fit,minmax(230px,1fr))}
+  .card{background:var(--panel);border:1px solid var(--border);border-radius:14px;padding:20px}
+  .card .tag{display:inline-block;font-size:.72rem;font-weight:700;letter-spacing:.08em;text-transform:uppercase;
+    padding:3px 9px;border-radius:6px;color:#fff;margin-bottom:10px}
+  .card h3{margin:0 0 6px;font-size:1.12rem}
+  .card p{margin:0;color:var(--muted);font-size:.95rem}
+  .loop-label{font-size:.78rem;font-weight:700;letter-spacing:.12em;color:var(--muted);text-transform:uppercase;margin:26px 0 2px}
+
+  /* levels */
+  .levels{grid-template-columns:repeat(auto-fit,minmax(225px,1fr))}
+  .level{background:linear-gradient(180deg,var(--panel2),var(--panel));border:1px solid var(--border);border-radius:14px;padding:22px;position:relative;overflow:hidden}
+  .level .num{font-size:2.4rem;font-weight:800;line-height:1;background:linear-gradient(120deg,#a371f7,#1d76db);-webkit-background-clip:text;background-clip:text;color:transparent}
+  .level h3{margin:6px 0 4px;font-size:1.05rem}
+  .level .for{color:var(--muted);font-size:.9rem;margin-bottom:12px}
+  .level ul{margin:0;padding-left:18px;color:var(--muted);font-size:.9rem}
+  .level li{margin-bottom:4px}
+
+  /* quickstart */
+  .code{background:#0a0e14;border:1px solid var(--border);border-radius:12px;padding:18px 20px;overflow-x:auto;
+    font-family:"SF Mono", "JetBrains Mono",Menlo,Consolas,monospace;font-size:.9rem;color:#c9d1d9;margin-top:18px}
+  .code .c{color:#6e7781}
+  .code .k{color:#79c0ff}
+  .two{display:grid;gap:22px;grid-template-columns:1fr 1fr;margin-top:8px}
+  @media(max-width:760px){.two{grid-template-columns:1fr}.hero{padding-top:60px}}
+
+  .ides{display:flex;gap:12px;flex-wrap:wrap;justify-content:center;margin-top:26px}
+  .ide{padding:7px 16px;border:1px solid var(--border);border-radius:999px;background:var(--panel);color:var(--muted);font-size:.9rem}
+
+  footer{border-top:1px solid var(--border);padding:40px 0;color:var(--muted);text-align:center;font-size:.92rem}
+  footer a{color:var(--muted)}
+</style>
+</head>
+<body>
+
+<nav>
+  <div class="wrap">
+    <span class="brand"><img src="assets/logo.png" alt="SevenD logo">SevenD</span>
+    <span class="links">
+      <a href="#story">Why</a>
+      <a href="#loop">The 7 Ds</a>
+      <a href="#levels">Levels</a>
+      <a href="#start">Quick start</a>
+      <a href="https://github.com/Ashvinnaik/SevenD">GitHub ↗</a>
+    </span>
+  </div>
+</nav>
+
+<header class="hero">
+  <div class="wrap">
+    <img class="logo" src="assets/logo.png" alt="SevenD">
+    <div class="pill"><span class="dot"></span> April Release · 4 levels · Claude · Cursor · Windsurf · Copilot</div>
+    <h1>Build software <span class="grad">with AI agents</span><br>without losing the plot</h1>
+    <p class="why">AI agents write code fast — SevenD makes sure they build the <em>right</em> thing, in the right order, and know when to stop and ask.</p>
+    <p class="sub">A progressive 7-phase framework that gives your project a skeleton any AI coding agent can follow.</p>
+    <div class="cta">
+      <a class="btn btn-primary" href="https://github.com/Ashvinnaik/SevenD">Get it on GitHub</a>
+      <a class="btn btn-ghost" href="https://github.com/Ashvinnaik/SevenD/releases/tag/april-2026">April Release notes</a>
+    </div>
+  </div>
+</header>
+
+<section id="story">
+  <div class="wrap">
+    <div class="story">
+      <p>Most developers and builders jump straight to the code. They open Cursor, Claude Code, or Copilot, describe what they want, and let the agent run. The first few features come out fast. <span class="em">It feels like magic.</span></p>
+      <p>Then the agent invents component names that don't exist. It skips the tests. It rebuilds something you already had, and quietly breaks something you didn't ask it to touch. The velocity that felt like a superpower turns into a pile of decisions nobody made on purpose.</p>
+      <p class="turn">The problem was never the agent. It was the missing structure around it.</p>
+      <p>SevenD is that structure — seven phases that tell an AI agent what to read, what to build, and exactly when to stop and ask. Human-AI collaboration with guardrails, not vibes.</p>
+    </div>
+  </div>
+</section>
+
+<section id="loop">
+  <div class="wrap">
+    <h2>The 7 Ds</h2>
+    <p class="lead">A Product loop and a Tech loop, joined at Documentation. Phase gates block premature advancement — no Design without an approved Definition, no Deployment without Diagnostics passing.</p>
+    <div class="diagram"><img src="assets/7d-loop.svg" alt="The 7 Ds loop diagram"></div>
+
+    <div class="loop-label">Product loop</div>
+    <div class="grid phases">
+      <div class="card"><span class="tag" style="background:var(--d1)">1 · Discovery</span><h3>Find what to build</h3><p>Identify what to build and why before a line of code exists.</p></div>
+      <div class="card"><span class="tag" style="background:var(--d2)">2 · Definition</span><h3>Specify it</h3><p>Write requirements and acceptance criteria the agent can verify against.</p></div>
+      <div class="card"><span class="tag" style="background:var(--d3)">3 · Design</span><h3>Architect it</h3><p>Lock components, interfaces, and standards so the agent stops inventing.</p></div>
+    </div>
+
+    <div class="loop-label">Bridge</div>
+    <div class="grid phases">
+      <div class="card"><span class="tag" style="background:var(--d4)">4 · Documentation</span><h3>Sync point</h3><p>Track status across every phase. One glance to know where the project stands.</p></div>
+    </div>
+
+    <div class="loop-label">Tech loop</div>
+    <div class="grid phases">
+      <div class="card"><span class="tag" style="background:var(--d5)">5 · Development</span><h3>Build it</h3><p>Implement in time-boxed sprints against the approved design.</p></div>
+      <div class="card"><span class="tag" style="background:var(--d6)">6 · Diagnostics</span><h3>Verify it</h3><p>Test for correctness and quality. Sprints close only at zero open bugs.</p></div>
+      <div class="card"><span class="tag" style="background:var(--d7)">7 · Deployment</span><h3>Ship & learn</h3><p>Release, monitor, and feed lessons back into Discovery.</p></div>
+    </div>
+  </div>
+</section>
+
+<section id="levels">
+  <div class="wrap">
+    <h2>Four levels. Start anywhere.</h2>
+    <p class="lead">Pick the level that matches your project today. You can always upgrade without losing content.</p>
+    <div class="grid levels">
+      <div class="level">
+        <div class="num">1</div><h3>Two files</h3><div class="for">Solo · weekend · prototype</div>
+        <ul><li>Product.md</li><li>Tech.md</li><li>+ IDE rules</li></ul>
+      </div>
+      <div class="level">
+        <div class="num">2</div><h3>Four files</h3><div class="for">Small team · real project</div>
+        <ul><li>+ Architecture.md</li><li>+ Resources.md</li><li>+ Project.md</li></ul>
+      </div>
+      <div class="level">
+        <div class="num">3</div><h3>Phase folders</h3><div class="for">Complex · weekly sprints</div>
+        <ul><li>7 phase INDEX + sprint files</li><li>reference/ docs</li><li>STATUS.md dashboard</li></ul>
+      </div>
+      <div class="level">
+        <div class="num">4</div><h3>GitHub-native</h3><div class="for">Team on GitHub · CI/CD</div>
+        <ul><li>Issues + Projects</li><li>Actions + PR gates</li><li>+ reference/ docs</li></ul>
+      </div>
+    </div>
+    <div class="ides">
+      <span class="ide">Claude Code</span>
+      <span class="ide">Cursor</span>
+      <span class="ide">Windsurf</span>
+      <span class="ide">VS Code Copilot</span>
+    </div>
+  </div>
+</section>
+
+<section id="start">
+  <div class="wrap">
+    <h2>Quick start</h2>
+    <p class="lead">Copy the templates, or let the Claude skill set it up with your real project details instead of placeholders.</p>
+    <div class="two">
+      <div>
+        <h3 style="margin-bottom:0">Option 1 · Copy the templates</h3>
+        <div class="code"><span class="c"># Clone the repo</span>
+git clone https://github.com/Ashvinnaik/SevenD.git
+
+<span class="c"># Copy the level you need</span>
+cp -r SevenD/level-1/ my-project/   <span class="c"># prototype</span>
+cp -r SevenD/level-3/ my-project/   <span class="c"># complex</span></div>
+      </div>
+      <div>
+        <h3 style="margin-bottom:0">Option 2 · Claude skill <span style="color:var(--muted);font-weight:400;font-size:.85rem">(recommended)</span></h3>
+        <div class="code"><span class="c"># Install the skill</span>
+cp -r SevenD/skill/ <span class="k">~</span>/.claude/skills/SevenD/
+
+<span class="c"># Start a conversation</span>
+claude
+
+<span class="c"># Triggers when you say:</span>
+<span class="c"># "set up my project" / "add a feature"</span></div>
+      </div>
+    </div>
+    <div class="cta" style="justify-content:flex-start;margin-top:28px">
+      <a class="btn btn-primary" href="https://github.com/Ashvinnaik/SevenD">Browse the repo</a>
+      <a class="btn btn-ghost" href="https://github.com/Ashvinnaik/SevenD#readme">Read the docs</a>
+    </div>
+  </div>
+</section>
+
+<footer>
+  <div class="wrap">
+    <p><strong>SevenD</strong> — Human-AI collaboration framework · April Release · MIT licensed</p>
+    <p>Built by <a href="https://x.com/ashvinn">Ash Naik</a> · <a href="https://github.com/Ashvinnaik/SevenD">github.com/Ashvinnaik/SevenD</a></p>
+  </div>
+</footer>
+
+</body>
+</html>
