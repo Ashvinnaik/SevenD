@@ -9,7 +9,7 @@
 A progressive framework for building software with AI coding agents. Structure your project so AI agents know what to read, what to build, and when to stop and ask.
 
 <p align="center">
-  <img src="assets/7d-loop.svg" alt="The 7 Ds loop: Discovery, Definition, Design (Product) bridged by Documentation into Development, Diagnostics, Deployment (Tech), with a feedback loop back to Discovery" width="100%">
+  <img src="assets/SevenD.png" alt="The SevenD loop: Discover, Define, Design (Product Loop) flowing through Develop, Document, Diagnose, Deploy (Development Loop)" width="100%">
 </p>
 
 ## The Problem
