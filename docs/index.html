@@ -3,139 +3,203 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>SevenD — A framework for building software with AI agents</title>
-<meta name="description" content="SevenD is a progressive framework for building software with AI coding agents. Structure your project so AI knows what to read, what to build, and when to stop and ask.">
+<title>SevenD — Build software with AI agents without losing the plot</title>
+<meta name="description" content="SevenD is a progressive 7-phase framework for building software with AI coding agents. Structure your project so AI knows what to read, what to build, and when to stop and ask.">
 <meta property="og:title" content="SevenD — Human-AI collaboration framework">
 <meta property="og:description" content="AI agents write code fast. SevenD makes sure they build the right thing, in the right order, and know when to stop and ask.">
 <meta property="og:image" content="assets/SevenD.png">
 <meta name="twitter:card" content="summary_large_image">
 <link rel="icon" type="image/png" href="assets/logo.png">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
 <style>
   :root{
-    --bg:#0d1117; --panel:#161b22; --panel2:#1c2230; --border:#283041;
-    --text:#e6edf3; --muted:#9aa7b4; --accent:#8250df; --accent2:#1d76db;
-    --d1:#1d76db; --d2:#5319e7; --d3:#0075ca; --d4:#006b75; --d5:#0e8a16; --d6:#bf8700; --d7:#d93f0b;
-    --maxw:1080px;
+    --bg:#08090d; --bg-soft:#0d0f15; --card:#12151d; --card2:#161a23;
+    --border:rgba(255,255,255,.08); --border-2:rgba(255,255,255,.14);
+    --text:#eef2f7; --muted:#93a0b4; --dim:#6b7686;
+    --brand:#4f9cf9; --brand2:#22d3ee; --brand3:#2c6e9b;
+    --d1:#3b82f6; --d2:#6366f1; --d3:#0ea5e9; --d4:#14b8a6; --d5:#22c55e; --d6:#eab308; --d7:#f97316;
+    --maxw:1140px;
   }
-  *{box-sizing:border-box}
+  *{box-sizing:border-box;margin:0;padding:0}
   html{scroll-behavior:smooth}
-  body{margin:0;background:var(--bg);color:var(--text);
-    font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",Helvetica,Arial,sans-serif;
-    line-height:1.6;-webkit-font-smoothing:antialiased;}
-  a{color:var(--accent2);text-decoration:none}
-  a:hover{text-decoration:underline}
+  body{background:var(--bg);color:var(--text);font-family:"Inter",-apple-system,BlinkMacSystemFont,"Segoe UI",sans-serif;
+    line-height:1.65;-webkit-font-smoothing:antialiased;overflow-x:hidden}
+  a{color:inherit;text-decoration:none}
   .wrap{max-width:var(--maxw);margin:0 auto;padding:0 24px}
-  section{padding:72px 0;border-top:1px solid var(--border)}
-  h2{font-size:1.9rem;margin:0 0 8px;letter-spacing:-.02em}
-  .lead{color:var(--muted);font-size:1.08rem;max-width:680px}
+  .eyebrow{font-family:"JetBrains Mono",monospace;font-size:.74rem;letter-spacing:.18em;text-transform:uppercase;color:var(--brand2)}
+  .grad{background:linear-gradient(110deg,#7cc0ff 0%,#4f9cf9 40%,#22d3ee 100%);-webkit-background-clip:text;background-clip:text;color:transparent}
+
+  /* background glow */
+  body::before{content:"";position:fixed;inset:0;z-index:-2;background:
+    radial-gradient(720px 420px at 50% -160px,rgba(79,156,249,.22),transparent 70%),
+    radial-gradient(520px 360px at 88% 8%,rgba(34,211,238,.10),transparent 70%);pointer-events:none}
+  body::after{content:"";position:fixed;inset:0;z-index:-1;opacity:.4;pointer-events:none;
+    background-image:linear-gradient(rgba(255,255,255,.025) 1px,transparent 1px),linear-gradient(90deg,rgba(255,255,255,.025) 1px,transparent 1px);
+    background-size:54px 54px;mask-image:radial-gradient(circle at 50% 0,#000,transparent 75%)}
 
   /* nav */
-  nav{position:sticky;top:0;z-index:20;background:rgba(13,17,23,.82);
-    backdrop-filter:blur(10px);border-bottom:1px solid var(--border)}
-  nav .wrap{display:flex;align-items:center;gap:18px;height:60px}
-  nav .brand{display:flex;align-items:center;gap:10px;font-weight:700;color:var(--text)}
-  nav .brand img{height:28px;width:auto}
-  nav .links{margin-left:auto;display:flex;gap:22px;align-items:center}
-  nav .links a{color:var(--muted);font-size:.95rem}
-  nav .links a:hover{color:var(--text);text-decoration:none}
-  .btn{display:inline-block;padding:10px 18px;border-radius:10px;font-weight:600;font-size:.95rem;border:1px solid var(--border)}
-  .btn:hover{text-decoration:none}
-  .btn-primary{background:linear-gradient(135deg,var(--accent),var(--accent2));color:#fff;border:0}
-  .btn-ghost{background:var(--panel);color:var(--text)}
+  nav{position:sticky;top:0;z-index:50;backdrop-filter:blur(14px);background:rgba(8,9,13,.7);border-bottom:1px solid var(--border)}
+  nav .wrap{display:flex;align-items:center;height:64px;gap:20px}
+  .brand{display:flex;align-items:center;gap:10px;font-weight:800;letter-spacing:-.02em;font-size:1.05rem}
+  .brand img{height:26px}
+  .nlinks{margin-left:auto;display:flex;align-items:center;gap:28px}
+  .nlinks a{color:var(--muted);font-size:.92rem;font-weight:500;transition:color .2s}
+  .nlinks a:hover{color:var(--text)}
+  @media(max-width:720px){.nlinks .hidem{display:none}}
+
+  .btn{display:inline-flex;align-items:center;gap:8px;font-weight:600;font-size:.95rem;padding:11px 20px;border-radius:11px;
+    border:1px solid var(--border-2);transition:transform .15s,box-shadow .25s,background .2s;cursor:pointer;white-space:nowrap}
+  .btn:hover{transform:translateY(-2px)}
+  .btn-primary{background:linear-gradient(120deg,#4f9cf9,#22d3ee);color:#05121f;border:0;font-weight:700;
+    box-shadow:0 8px 30px rgba(79,156,249,.35)}
+  .btn-primary:hover{box-shadow:0 12px 38px rgba(79,156,249,.5)}
+  .btn-ghost{background:rgba(255,255,255,.04);color:var(--text)}
+  .btn-sm{padding:8px 16px;font-size:.88rem}
 
   /* hero */
-  .hero{padding:88px 0 64px;text-align:center;background:
-    radial-gradient(900px 380px at 50% -120px,rgba(130,80,223,.22),transparent 70%);}
-  .hero img.logo{height:96px;width:auto;margin-bottom:22px;filter:drop-shadow(0 8px 28px rgba(0,0,0,.5))}
-  .hero h1{font-size:clamp(2.2rem,5vw,3.4rem);margin:0 0 14px;letter-spacing:-.03em;line-height:1.08}
-  .hero h1 .grad{background:linear-gradient(120deg,#a371f7,#1d76db);-webkit-background-clip:text;background-clip:text;color:transparent}
-  .hero .why{font-size:1.25rem;color:var(--text);max-width:720px;margin:0 auto 10px;font-weight:500}
-  .hero .sub{font-size:1.05rem;color:var(--muted);max-width:660px;margin:0 auto 30px}
-  .cta{display:flex;gap:14px;justify-content:center;flex-wrap:wrap}
-  .pill{display:inline-flex;gap:8px;align-items:center;margin-bottom:26px;padding:6px 14px;border:1px solid var(--border);
-    border-radius:999px;background:var(--panel);color:var(--muted);font-size:.85rem}
-  .pill .dot{width:7px;height:7px;border-radius:50%;background:#3fb950;box-shadow:0 0 0 3px rgba(63,185,80,.2)}
+  .hero{text-align:center;padding:92px 0 30px}
+  .hero .chip{display:inline-flex;align-items:center;gap:9px;padding:6px 15px;border:1px solid var(--border-2);border-radius:999px;
+    background:rgba(255,255,255,.03);font-size:.82rem;color:var(--muted);margin-bottom:30px;font-weight:500}
+  .hero .chip .dot{width:7px;height:7px;border-radius:50%;background:#34d399;box-shadow:0 0 0 4px rgba(52,211,153,.18)}
+  .hero h1{font-size:clamp(2.6rem,6.4vw,4.7rem);line-height:1.02;letter-spacing:-.045em;font-weight:900;margin-bottom:22px}
+  .hero .why{font-size:clamp(1.1rem,2.3vw,1.42rem);color:#c4cedb;max-width:680px;margin:0 auto 14px;font-weight:500}
+  .hero .why em{font-style:normal;color:var(--brand2);font-weight:700}
+  .hero .sub{color:var(--muted);max-width:600px;margin:0 auto 38px;font-size:1.03rem}
+  .hero .cta{display:flex;gap:14px;justify-content:center;flex-wrap:wrap}
+  .worksrow{display:flex;gap:10px;justify-content:center;flex-wrap:wrap;margin-top:38px;align-items:center}
+  .worksrow .lbl{font-family:"JetBrains Mono",monospace;font-size:.72rem;letter-spacing:.12em;text-transform:uppercase;color:var(--dim)}
+  .chiplet{padding:6px 13px;border:1px solid var(--border);border-radius:8px;background:var(--card);font-size:.85rem;color:var(--muted)}
 
-  /* narrative */
-  .story{background:var(--panel);border:1px solid var(--border);border-radius:16px;padding:34px 32px;max-width:820px;margin:0 auto}
-  .story p{margin:0 0 14px;font-size:1.08rem}
-  .story p:last-child{margin-bottom:0}
-  .story .em{color:#f0c674}
-  .story .turn{color:var(--text);font-weight:600}
-
-  /* diagram */
-  .diagram{background:#fff;border-radius:16px;padding:26px;margin-top:8px}
+  /* diagram showcase */
+  .showcase{margin:46px auto 0;max-width:880px}
+  .diagram{background:linear-gradient(180deg,#f8fbff,#eef4fb);border-radius:22px;padding:38px;border:1px solid var(--border);
+    box-shadow:0 30px 80px -30px rgba(34,211,238,.35),0 0 0 1px rgba(79,156,249,.15)}
   .diagram img{width:100%;height:auto;display:block}
 
-  /* phase grid */
-  .grid{display:grid;gap:16px;margin-top:34px}
-  .phases{grid-template-columns:repeat(auto-fit,minmax(230px,1fr))}
-  .card{background:var(--panel);border:1px solid var(--border);border-radius:14px;padding:20px}
-  .card .tag{display:inline-block;font-size:.72rem;font-weight:700;letter-spacing:.08em;text-transform:uppercase;
-    padding:3px 9px;border-radius:6px;color:#fff;margin-bottom:10px}
-  .card h3{margin:0 0 6px;font-size:1.12rem}
-  .card p{margin:0;color:var(--muted);font-size:.95rem}
-  .loop-label{font-size:.78rem;font-weight:700;letter-spacing:.12em;color:var(--muted);text-transform:uppercase;margin:26px 0 2px}
+  /* sections */
+  section{padding:96px 0;position:relative}
+  .shead{max-width:680px;margin-bottom:46px}
+  .shead.center{margin-left:auto;margin-right:auto;text-align:center}
+  .shead h2{font-size:clamp(1.9rem,4vw,2.7rem);letter-spacing:-.035em;font-weight:800;margin:12px 0 14px;line-height:1.1}
+  .shead p{color:var(--muted);font-size:1.08rem}
+
+  /* narrative */
+  .story{max-width:780px;margin:0 auto;text-align:center}
+  .story .big{font-size:clamp(1.5rem,3.6vw,2.3rem);font-weight:700;letter-spacing:-.03em;line-height:1.32;margin-bottom:26px}
+  .story .big .magic{color:var(--d6)}
+  .story .big .turn{background:linear-gradient(110deg,#4f9cf9,#22d3ee);-webkit-background-clip:text;background-clip:text;color:transparent}
+  .story p{color:var(--muted);font-size:1.06rem;max-width:640px;margin:0 auto}
+
+  /* bento 7Ds */
+  .loopcap{display:flex;align-items:center;gap:12px;margin:34px 0 16px}
+  .loopcap span{font-family:"JetBrains Mono",monospace;font-size:.74rem;letter-spacing:.14em;text-transform:uppercase;color:var(--dim);white-space:nowrap}
+  .loopcap .line{flex:1;height:1px;background:var(--border)}
+  .bento{display:grid;gap:16px;grid-template-columns:repeat(3,1fr)}
+  .bento.tech{grid-template-columns:repeat(3,1fr)}
+  .bento.bridge{grid-template-columns:1fr}
+  @media(max-width:760px){.bento,.bento.tech{grid-template-columns:1fr}}
+  .dcard{position:relative;background:var(--card);border:1px solid var(--border);border-radius:16px;padding:24px;overflow:hidden;
+    transition:transform .2s,border-color .2s,background .2s}
+  .dcard:hover{transform:translateY(-4px);border-color:var(--border-2);background:var(--card2)}
+  .dcard .num{font-family:"JetBrains Mono",monospace;font-size:.8rem;color:var(--dim)}
+  .dcard h3{font-size:1.18rem;letter-spacing:-.01em;margin:8px 0 7px;display:flex;align-items:center;gap:9px}
+  .dcard h3 .dotc{width:9px;height:9px;border-radius:50%;flex:none}
+  .dcard p{color:var(--muted);font-size:.95rem}
+  .dcard::after{content:"";position:absolute;inset:0;border-radius:16px;padding:1px;opacity:0;transition:opacity .25s;pointer-events:none;
+    background:linear-gradient(120deg,transparent,var(--glow,transparent));-webkit-mask:linear-gradient(#000 0 0) content-box,linear-gradient(#000 0 0);-webkit-mask-composite:xor;mask-composite:exclude}
+  .dcard:hover::after{opacity:.5}
+  .bridge .dcard{background:linear-gradient(120deg,rgba(20,184,166,.10),var(--card));border-color:rgba(20,184,166,.28)}
 
   /* levels */
-  .levels{grid-template-columns:repeat(auto-fit,minmax(225px,1fr))}
-  .level{background:linear-gradient(180deg,var(--panel2),var(--panel));border:1px solid var(--border);border-radius:14px;padding:22px;position:relative;overflow:hidden}
-  .level .num{font-size:2.4rem;font-weight:800;line-height:1;background:linear-gradient(120deg,#a371f7,#1d76db);-webkit-background-clip:text;background-clip:text;color:transparent}
-  .level h3{margin:6px 0 4px;font-size:1.05rem}
-  .level .for{color:var(--muted);font-size:.9rem;margin-bottom:12px}
-  .level ul{margin:0;padding-left:18px;color:var(--muted);font-size:.9rem}
-  .level li{margin-bottom:4px}
+  .levels{display:grid;gap:18px;grid-template-columns:repeat(4,1fr)}
+  @media(max-width:920px){.levels{grid-template-columns:repeat(2,1fr)}}
+  @media(max-width:520px){.levels{grid-template-columns:1fr}}
+  .lvl{position:relative;background:var(--card);border:1px solid var(--border);border-radius:18px;padding:26px 24px;transition:transform .2s,border-color .2s}
+  .lvl:hover{transform:translateY(-5px);border-color:var(--border-2)}
+  .lvl.hot{border-color:rgba(79,156,249,.5);background:linear-gradient(180deg,rgba(79,156,249,.10),var(--card))}
+  .lvl .rec{position:absolute;top:-11px;left:24px;font-family:"JetBrains Mono",monospace;font-size:.66rem;letter-spacing:.1em;text-transform:uppercase;
+    background:linear-gradient(120deg,#4f9cf9,#22d3ee);color:#05121f;padding:4px 11px;border-radius:999px;font-weight:700}
+  .lvl .num{font-size:2.7rem;font-weight:900;letter-spacing:-.04em;line-height:1}
+  .lvl .num span{font-size:.95rem;font-weight:600;color:var(--dim);font-family:"JetBrains Mono",monospace;margin-left:6px}
+  .lvl h3{font-size:1.12rem;margin:10px 0 3px;letter-spacing:-.01em}
+  .lvl .for{color:var(--brand2);font-size:.85rem;font-weight:500;margin-bottom:14px}
+  .lvl ul{list-style:none;display:flex;flex-direction:column;gap:6px}
+  .lvl li{color:var(--muted);font-size:.9rem;padding-left:18px;position:relative}
+  .lvl li::before{content:"›";position:absolute;left:2px;color:var(--brand)}
 
   /* quickstart */
-  .code{background:#0a0e14;border:1px solid var(--border);border-radius:12px;padding:18px 20px;overflow-x:auto;
-    font-family:"SF Mono", "JetBrains Mono",Menlo,Consolas,monospace;font-size:.9rem;color:#c9d1d9;margin-top:18px}
-  .code .c{color:#6e7781}
-  .code .k{color:#79c0ff}
-  .two{display:grid;gap:22px;grid-template-columns:1fr 1fr;margin-top:8px}
-  @media(max-width:760px){.two{grid-template-columns:1fr}.hero{padding-top:60px}}
+  .qgrid{display:grid;gap:20px;grid-template-columns:1fr 1fr}
+  @media(max-width:760px){.qgrid{grid-template-columns:1fr}}
+  .qcol{background:var(--card);border:1px solid var(--border);border-radius:18px;padding:26px}
+  .qcol .qh{display:flex;align-items:baseline;gap:10px;margin-bottom:4px}
+  .qcol .qh h3{font-size:1.15rem;letter-spacing:-.01em}
+  .qcol .qh .badge{font-family:"JetBrains Mono",monospace;font-size:.66rem;letter-spacing:.08em;text-transform:uppercase;
+    color:var(--brand2);border:1px solid rgba(34,211,238,.35);border-radius:6px;padding:2px 7px}
+  .qcol .qd{color:var(--muted);font-size:.92rem;margin-bottom:16px}
+  pre{background:#05070b;border:1px solid var(--border);border-radius:12px;padding:18px 20px;overflow-x:auto;
+    font-family:"JetBrains Mono",monospace;font-size:.86rem;line-height:1.7;color:#c9d6e4}
+  pre .c{color:#5b6675}
+  pre .k{color:#7cc0ff}
 
-  .ides{display:flex;gap:12px;flex-wrap:wrap;justify-content:center;margin-top:26px}
-  .ide{padding:7px 16px;border:1px solid var(--border);border-radius:999px;background:var(--panel);color:var(--muted);font-size:.9rem}
+  /* cta band */
+  .ctaband{text-align:center;background:linear-gradient(120deg,rgba(79,156,249,.14),rgba(34,211,238,.10));
+    border:1px solid var(--border-2);border-radius:26px;padding:60px 30px;position:relative;overflow:hidden}
+  .ctaband h2{font-size:clamp(1.8rem,4vw,2.6rem);letter-spacing:-.035em;font-weight:800;margin-bottom:14px}
+  .ctaband p{color:var(--muted);max-width:520px;margin:0 auto 30px;font-size:1.05rem}
+  .ctaband .cta{display:flex;gap:14px;justify-content:center;flex-wrap:wrap}
 
-  footer{border-top:1px solid var(--border);padding:40px 0;color:var(--muted);text-align:center;font-size:.92rem}
+  footer{border-top:1px solid var(--border);padding:46px 0;color:var(--dim);font-size:.92rem}
+  footer .wrap{display:flex;justify-content:space-between;align-items:center;gap:16px;flex-wrap:wrap}
   footer a{color:var(--muted)}
+  footer a:hover{color:var(--text)}
 </style>
 </head>
 <body>
 
 <nav>
   <div class="wrap">
-    <span class="brand"><img src="assets/logo.png" alt="SevenD logo">SevenD</span>
-    <span class="links">
-      <a href="#story">Why</a>
-      <a href="#loop">The 7 Ds</a>
-      <a href="#levels">Levels</a>
-      <a href="#start">Quick start</a>
-      <a href="https://github.com/Ashvinnaik/SevenD">GitHub ↗</a>
-    </span>
+    <a class="brand" href="#top"><img src="assets/logo.png" alt="">SevenD</a>
+    <div class="nlinks">
+      <a class="hidem" href="#why">Why</a>
+      <a class="hidem" href="#loop">The 7 Ds</a>
+      <a class="hidem" href="#levels">Levels</a>
+      <a class="hidem" href="#start">Quick start</a>
+      <a class="btn btn-ghost btn-sm" href="https://github.com/Ashvinnaik/SevenD">★ GitHub</a>
+    </div>
   </div>
 </nav>
 
-<header class="hero">
+<header class="hero" id="top">
   <div class="wrap">
-    <img class="logo" src="assets/logo.png" alt="SevenD">
-    <div class="pill"><span class="dot"></span> April Release · 4 levels · Claude · Cursor · Windsurf · Copilot</div>
-    <h1>Build software <span class="grad">with AI agents</span><br>without losing the plot</h1>
-    <p class="why">AI agents write code fast — SevenD makes sure they build the <em>right</em> thing, in the right order, and know when to stop and ask.</p>
+    <div class="chip"><span class="dot"></span> April Release · v2026.04</div>
+    <h1>Build software with<br><span class="grad">AI agents</span> without losing the plot</h1>
+    <p class="why">AI agents write code fast — SevenD makes sure they build the <em>right thing</em>, in the right order, and know when to stop and ask.</p>
     <p class="sub">A progressive 7-phase framework that gives your project a skeleton any AI coding agent can follow.</p>
     <div class="cta">
-      <a class="btn btn-primary" href="https://github.com/Ashvinnaik/SevenD">Get it on GitHub</a>
-      <a class="btn btn-ghost" href="https://github.com/Ashvinnaik/SevenD/releases/tag/april-2026">April Release notes</a>
+      <a class="btn btn-primary" href="https://github.com/Ashvinnaik/SevenD">★ Star on GitHub</a>
+      <a class="btn btn-ghost" href="#start">Quick start →</a>
     </div>
+    <div class="worksrow">
+      <span class="lbl">Works with</span>
+      <span class="chiplet">Claude Code</span>
+      <span class="chiplet">Cursor</span>
+      <span class="chiplet">Windsurf</span>
+      <span class="chiplet">VS Code Copilot</span>
+    </div>
+  </div>
+
+  <div class="wrap showcase">
+    <div class="diagram"><img src="assets/SevenD.png" alt="The SevenD infinity loop: Product Loop (Discover, Define, Design) flowing into the Development Loop (Develop, Document, Diagnose, Deploy)"></div>
   </div>
 </header>
 
-<section id="story">
+<section id="why">
   <div class="wrap">
     <div class="story">
-      <p>Most developers and builders jump straight to the code. They open Cursor, Claude Code, or Copilot, describe what they want, and let the agent run. The first few features come out fast. <span class="em">It feels like magic.</span></p>
-      <p>Then the agent invents component names that don't exist. It skips the tests. It rebuilds something you already had, and quietly breaks something you didn't ask it to touch. The velocity that felt like a superpower turns into a pile of decisions nobody made on purpose.</p>
-      <p class="turn">The problem was never the agent. It was the missing structure around it.</p>
+      <span class="eyebrow">The problem</span>
+      <p class="big">Most builders jump straight to the code. The first few features come out fast. <span class="magic">It feels like magic</span> — until the agent invents components that don't exist, skips the tests, and quietly breaks what you didn't ask it to touch. <span class="turn">The problem was never the agent. It was the missing structure around it.</span></p>
       <p>SevenD is that structure — seven phases that tell an AI agent what to read, what to build, and exactly when to stop and ask. Human-AI collaboration with guardrails, not vibes.</p>
     </div>
   </div>
@@ -143,99 +207,118 @@
 
 <section id="loop">
   <div class="wrap">
-    <h2>The 7 Ds</h2>
-    <p class="lead">A Product loop and a Tech loop, joined at Documentation. Phase gates block premature advancement — no Design without an approved Definition, no Deployment without Diagnostics passing.</p>
-    <div class="diagram"><img src="assets/SevenD.png" alt="The SevenD infinity loop: Product Loop (Discover, Define, Design) and Development Loop (Develop, Document, Diagnose, Deploy)"></div>
-
-    <div class="loop-label">Product loop</div>
-    <div class="grid phases">
-      <div class="card"><span class="tag" style="background:var(--d1)">1 · Discovery</span><h3>Find what to build</h3><p>Identify what to build and why before a line of code exists.</p></div>
-      <div class="card"><span class="tag" style="background:var(--d2)">2 · Definition</span><h3>Specify it</h3><p>Write requirements and acceptance criteria the agent can verify against.</p></div>
-      <div class="card"><span class="tag" style="background:var(--d3)">3 · Design</span><h3>Architect it</h3><p>Lock components, interfaces, and standards so the agent stops inventing.</p></div>
+    <div class="shead center">
+      <span class="eyebrow">The framework</span>
+      <h2>Seven phases. Two loops. Zero guesswork.</h2>
+      <p>A Product loop and a Tech loop, joined at Documentation. Phase gates block premature advancement — no Design without an approved Definition, no Deployment without Diagnostics passing.</p>
     </div>
 
-    <div class="loop-label">Bridge</div>
-    <div class="grid phases">
-      <div class="card"><span class="tag" style="background:var(--d4)">4 · Documentation</span><h3>Sync point</h3><p>Track status across every phase. One glance to know where the project stands.</p></div>
+    <div class="loopcap"><span>Product Loop</span><div class="line"></div></div>
+    <div class="bento">
+      <div class="dcard" style="--glow:var(--d1)"><div class="num">01</div><h3><span class="dotc" style="background:var(--d1)"></span>Discovery</h3><p>Identify what to build and why — before a single line of code exists.</p></div>
+      <div class="dcard" style="--glow:var(--d2)"><div class="num">02</div><h3><span class="dotc" style="background:var(--d2)"></span>Definition</h3><p>Write requirements and acceptance criteria the agent can verify against.</p></div>
+      <div class="dcard" style="--glow:var(--d3)"><div class="num">03</div><h3><span class="dotc" style="background:var(--d3)"></span>Design</h3><p>Lock components, interfaces, and standards so the agent stops inventing them.</p></div>
     </div>
 
-    <div class="loop-label">Tech loop</div>
-    <div class="grid phases">
-      <div class="card"><span class="tag" style="background:var(--d5)">5 · Development</span><h3>Build it</h3><p>Implement in time-boxed sprints against the approved design.</p></div>
-      <div class="card"><span class="tag" style="background:var(--d6)">6 · Diagnostics</span><h3>Verify it</h3><p>Test for correctness and quality. Sprints close only at zero open bugs.</p></div>
-      <div class="card"><span class="tag" style="background:var(--d7)">7 · Deployment</span><h3>Ship & learn</h3><p>Release, monitor, and feed lessons back into Discovery.</p></div>
+    <div class="loopcap"><span>The Bridge</span><div class="line"></div></div>
+    <div class="bento bridge">
+      <div class="dcard" style="--glow:var(--d4)"><div class="num">04</div><h3><span class="dotc" style="background:var(--d4)"></span>Documentation — the single source of truth</h3><p>Track status across every phase. One glance to know where the project stands and what's been decided.</p></div>
+    </div>
+
+    <div class="loopcap"><span>Tech Loop</span><div class="line"></div></div>
+    <div class="bento tech">
+      <div class="dcard" style="--glow:var(--d5)"><div class="num">05</div><h3><span class="dotc" style="background:var(--d5)"></span>Development</h3><p>Implement in time-boxed sprints against the approved design.</p></div>
+      <div class="dcard" style="--glow:var(--d6)"><div class="num">06</div><h3><span class="dotc" style="background:var(--d6)"></span>Diagnostics</h3><p>Test for correctness and quality. Sprints close only at zero open bugs.</p></div>
+      <div class="dcard" style="--glow:var(--d7)"><div class="num">07</div><h3><span class="dotc" style="background:var(--d7)"></span>Deployment</h3><p>Ship, monitor, and feed every lesson back into Discovery.</p></div>
     </div>
   </div>
 </section>
 
 <section id="levels">
   <div class="wrap">
-    <h2>Four levels. Start anywhere.</h2>
-    <p class="lead">Pick the level that matches your project today. You can always upgrade without losing content.</p>
-    <div class="grid levels">
-      <div class="level">
-        <div class="num">1</div><h3>Two files</h3><div class="for">Solo · weekend · prototype</div>
-        <ul><li>Product.md</li><li>Tech.md</li><li>+ IDE rules</li></ul>
+    <div class="shead center">
+      <span class="eyebrow">Adopt incrementally</span>
+      <h2>Four levels. Start anywhere.</h2>
+      <p>Pick the level that matches your project today. You can always upgrade without losing content.</p>
+    </div>
+    <div class="levels">
+      <div class="lvl">
+        <div class="num">1</div>
+        <h3>Two files</h3><div class="for">Solo · weekend · prototype</div>
+        <ul><li>Product.md</li><li>Tech.md</li><li>IDE rules included</li></ul>
       </div>
-      <div class="level">
-        <div class="num">2</div><h3>Four files</h3><div class="for">Small team · real project</div>
+      <div class="lvl">
+        <div class="num">2</div>
+        <h3>Four files</h3><div class="for">Small team · real project</div>
         <ul><li>+ Architecture.md</li><li>+ Resources.md</li><li>+ Project.md</li></ul>
       </div>
-      <div class="level">
-        <div class="num">3</div><h3>Phase folders</h3><div class="for">Complex · weekly sprints</div>
-        <ul><li>7 phase INDEX + sprint files</li><li>reference/ docs</li><li>STATUS.md dashboard</li></ul>
+      <div class="lvl hot">
+        <span class="rec">Recommended</span>
+        <div class="num">3</div>
+        <h3>Phase folders</h3><div class="for">Complex · weekly sprints</div>
+        <ul><li>7 phase INDEX + sprints</li><li>reference/ docs</li><li>STATUS.md dashboard</li></ul>
       </div>
-      <div class="level">
-        <div class="num">4</div><h3>GitHub-native</h3><div class="for">Team on GitHub · CI/CD</div>
+      <div class="lvl">
+        <div class="num">4</div>
+        <h3>GitHub-native</h3><div class="for">Team · CI/CD</div>
         <ul><li>Issues + Projects</li><li>Actions + PR gates</li><li>+ reference/ docs</li></ul>
       </div>
-    </div>
-    <div class="ides">
-      <span class="ide">Claude Code</span>
-      <span class="ide">Cursor</span>
-      <span class="ide">Windsurf</span>
-      <span class="ide">VS Code Copilot</span>
     </div>
   </div>
 </section>
 
 <section id="start">
   <div class="wrap">
-    <h2>Quick start</h2>
-    <p class="lead">Copy the templates, or let the Claude skill set it up with your real project details instead of placeholders.</p>
-    <div class="two">
-      <div>
-        <h3 style="margin-bottom:0">Option 1 · Copy the templates</h3>
-        <div class="code"><span class="c"># Clone the repo</span>
+    <div class="shead center">
+      <span class="eyebrow">Get going in minutes</span>
+      <h2>Quick start</h2>
+      <p>Copy the templates, or let the Claude skill set it up with your real project details instead of placeholders.</p>
+    </div>
+    <div class="qgrid">
+      <div class="qcol">
+        <div class="qh"><h3>Copy the templates</h3><span class="badge">fastest</span></div>
+        <p class="qd">Clone, drop a level into your project, fill in the placeholders.</p>
+<pre><span class="c"># Clone the repo</span>
 git clone https://github.com/Ashvinnaik/SevenD.git
 
 <span class="c"># Copy the level you need</span>
-cp -r SevenD/level-1/ my-project/   <span class="c"># prototype</span>
-cp -r SevenD/level-3/ my-project/   <span class="c"># complex</span></div>
+cp -r SevenD/level-1/ my-project/  <span class="c"># prototype</span>
+cp -r SevenD/level-3/ my-project/  <span class="c"># complex</span></pre>
       </div>
-      <div>
-        <h3 style="margin-bottom:0">Option 2 · Claude skill <span style="color:var(--muted);font-weight:400;font-size:.85rem">(recommended)</span></h3>
-        <div class="code"><span class="c"># Install the skill</span>
+      <div class="qcol">
+        <div class="qh"><h3>Use the Claude skill</h3><span class="badge">recommended</span></div>
+        <p class="qd">Generates files filled in with your actual project, not placeholders.</p>
+<pre><span class="c"># Install the skill</span>
 cp -r SevenD/skill/ <span class="k">~</span>/.claude/skills/SevenD/
 
 <span class="c"># Start a conversation</span>
 claude
 
 <span class="c"># Triggers when you say:</span>
-<span class="c"># "set up my project" / "add a feature"</span></div>
+<span class="c"># "set up my project with SevenD"</span></pre>
       </div>
     </div>
-    <div class="cta" style="justify-content:flex-start;margin-top:28px">
-      <a class="btn btn-primary" href="https://github.com/Ashvinnaik/SevenD">Browse the repo</a>
-      <a class="btn btn-ghost" href="https://github.com/Ashvinnaik/SevenD#readme">Read the docs</a>
+  </div>
+</section>
+
+<section>
+  <div class="wrap">
+    <div class="ctaband">
+      <span class="eyebrow">Open source · MIT</span>
+      <h2>Give your AI agents a backbone.</h2>
+      <p>Star the repo, copy a level, and ship your next feature with structure instead of vibes.</p>
+      <div class="cta">
+        <a class="btn btn-primary" href="https://github.com/Ashvinnaik/SevenD">★ Star on GitHub</a>
+        <a class="btn btn-ghost" href="https://github.com/Ashvinnaik/SevenD/releases/tag/april-2026">April Release notes</a>
+      </div>
     </div>
   </div>
 </section>
 
 <footer>
   <div class="wrap">
-    <p><strong>SevenD</strong> — Human-AI collaboration framework · April Release · MIT licensed</p>
-    <p>Built by <a href="https://x.com/ashvinn">Ash Naik</a> · <a href="https://github.com/Ashvinnaik/SevenD">github.com/Ashvinnaik/SevenD</a></p>
+    <span><strong style="color:var(--muted)">SevenD</strong> — Human-AI collaboration framework · MIT licensed</span>
+    <span><a href="https://github.com/Ashvinnaik/SevenD">github.com/Ashvinnaik/SevenD</a></span>
   </div>
 </footer>
 
