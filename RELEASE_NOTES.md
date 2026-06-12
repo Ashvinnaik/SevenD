@@ -2,7 +2,7 @@
 
 **Version:** April 2026
 **Release date:** April 4, 2026
-**Repo:** https://github.com/PowerPromptsAI/SevenD
+**Repo:** https://github.com/Ashvinnaik/SevenD
 
 ---
 
@@ -102,6 +102,6 @@ The Claude skill (for Claude Code CLI and Claude.ai Projects) has been updated t
 
 ## Links
 
-- **Repo:** https://github.com/PowerPromptsAI/SevenD
+- **Repo:** https://github.com/Ashvinnaik/SevenD
 - **Research report:** https://powerprompts-website-prod.s3.us-east-1.amazonaws.com/assets/AI-Human+Interactions+Report.pdf
-- **Author:** Ash Naik (@PowerPromptsAI)
+- **Author:** Ash Naik (@Ashvinnaik)

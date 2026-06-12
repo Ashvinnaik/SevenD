@@ -14,7 +14,7 @@ Real projects aren't linear. Your framework shouldn't be either.
 
 Here's what changed and why 👇
 
-https://github.com/PowerPromptsAI/SevenD
+https://github.com/Ashvinnaik/SevenD
 
 ### Post 2 — The Problem
 
@@ -24,7 +24,9 @@ Speed without bug accountability.
 
 In December we hit 325 commits — our highest velocity month. Also our worst. Fix-to-build ratio was 1.8:1.
 
-The April Release bakes the fix directly into the framework structure.
+The April Release bakes the fix directly into the framework structure.👇
+
+https://github.com/Ashvinnaik/SevenD
 
 ### Post 3 — Sprint-Based Phases
 
@@ -34,7 +36,9 @@ Discovery doesn't move at the same speed as Development. Forcing them into one s
 
 Now: lightweight INDEX per phase, linked to focused sprint files. Design can iterate while Development ships.
 
-Non-linear work, non-linear structure.
+Non-linear work, non-linear structure.👇
+
+https://github.com/Ashvinnaik/SevenD
 
 ### Post 4 — Zero-Bug Close
 
@@ -44,7 +48,9 @@ Simple. Brutal. Effective.
 
 Every sprint has Build (what you produce) and Bug (what's broken). No archiving until bugs clear.
 
-This one rule dropped our fix-to-build ratio from 1.8:1 to 0.7:1.
+This one rule dropped our fix-to-build ratio from 1.8:1 to 0.7:1.👇
+
+https://github.com/Ashvinnaik/SevenD
 
 ### Post 5 — Reference Directory
 
@@ -54,7 +60,9 @@ Architecture, component registry, interface contracts, decision log, agent rules
 
 Closed sprints archive there too. Working directories stay clean.
 
-Your AI agent reads reference/ once and knows the entire system.
+Your AI agent reads reference/ once and knows the entire system.👇
+
+https://github.com/Ashvinnaik/SevenD
 
 ### Post 6 — CTA
 
@@ -68,7 +76,7 @@ Your AI agent reads reference/ once and knows the entire system.
 Includes a Claude skill that sets everything up for you.
 
 Full release notes + the research behind it:
-https://github.com/PowerPromptsAI/SevenD
+https://github.com/Ashvinnaik/SevenD
 
 ---
 
@@ -100,7 +108,7 @@ SevenD has 4 levels — from 2 files for a weekend project to full GitHub-native
 
 The framework wasn't designed in advance. It was extracted from the patterns that actually worked across those 34 projects. The full research is published as well.
 
-Repo: https://github.com/PowerPromptsAI/SevenD
+Repo: https://github.com/Ashvinnaik/SevenD
 
 Research: https://powerprompts-website-prod.s3.us-east-1.amazonaws.com/assets/AI-Human+Interactions+Report.pdf
 
@@ -129,6 +137,6 @@ Today I released the April update to SevenD — an open-source "operating system
 
 Free. Open source. Built from patterns that actually worked.
 
-https://github.com/PowerPromptsAI/SevenD
+https://github.com/Ashvinnaik/SevenD
 
 #BuildWithAI #OpenSource #DeveloperTools

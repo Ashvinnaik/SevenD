@@ -45,7 +45,7 @@ Every level includes IDE rules for **Claude Code**, **Cursor**, **Windsurf**, an
 
 ```bash
 # Clone the repo
-git clone https://github.com/PowerPromptsAI/SevenD.git
+git clone https://github.com/Ashvinnaik/SevenD.git
 
 # Copy the level you need into your project
 cp -r SevenD/level-1/ my-project/    # Solo / prototype
