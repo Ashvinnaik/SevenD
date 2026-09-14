@@ -33,13 +33,13 @@ Seven Grok-powered Project Manager bots, one per phase of the 7 Ds. Give a PM bo
 
 | Phase | Loop | Bot | Link |
 |-------|------|-----|------|
-| Discovery | Product | Discovery PM | https://x.ai/bot/ht_c0Ev0JRc1O1FAwjsVV |
-| Definition | Product | Definition PM | https://x.ai/bot/lCPi6D5Smr2QP1QA5_cMr |
-| Design | Product | Design PM | https://x.ai/bot/Q6JhV9jLLQtX6r7bRTCG_ |
-| Documentation | Bridge | Document PM | https://x.ai/bot/xheAbAQYQT4esSGc8B3xX |
-| Development | Engineering | Development PM | https://x.ai/bot/fhHvohYNURwk9JwiK7H7U |
-| Diagnostics | Engineering | Diagnostics PM | https://x.ai/bot/Iz3asXRLoLC8Pr0gZYGdE |
-| Deployment | Engineering | Deployment PM | https://x.ai/bot/EdkMNLrTT0WLNDQYN-l-e |
+| 🧭 Discovery | Product | Discovery PM | https://x.ai/bot/ht_c0Ev0JRc1O1FAwjsVV |
+| 💡 Definition | Product | Definition PM | https://x.ai/bot/lCPi6D5Smr2QP1QA5_cMr |
+| 📐 Design | Product | Design PM | https://x.ai/bot/Q6JhV9jLLQtX6r7bRTCG_ |
+| 📄 Documentation | Bridge | Document PM | https://x.ai/bot/xheAbAQYQT4esSGc8B3xX |
+| `</>` Development | Engineering | Development PM | https://x.ai/bot/fhHvohYNURwk9JwiK7H7U |
+| 💓 Diagnostics | Engineering | Diagnostics PM | https://x.ai/bot/Iz3asXRLoLC8Pr0gZYGdE |
+| 🚀 Deployment | Engineering | Deployment PM | https://x.ai/bot/EdkMNLrTT0WLNDQYN-l-e |
 
 Same phase gates as the framework apply: no spec without an approved backlog item, no design without an approved spec, no development plan without a completed design, no deployment without diagnostics passing.
 
@@ -106,13 +106,13 @@ claude
 
 | Phase | Loop | What happens |
 |-------|------|-------------|
-| **Discovery** | Product | Identify what to build and why |
-| **Definition** | Product | Specify requirements and acceptance criteria |
-| **Design** | Product | Architect components, interfaces, standards |
-| **Documentation** | Bridge | Track status across all phases |
-| **Development** | Engineering | Build it in time-boxed sprints |
-| **Diagnostics** | Engineering | Verify correctness and quality |
-| **Deployment** | Engineering | Ship, monitor, learn |
+| 🧭 **Discovery** | Product | Identify what to build and why |
+| 💡 **Definition** | Product | Specify requirements and acceptance criteria |
+| 📐 **Design** | Product | Architect components, interfaces, standards |
+| 📄 **Documentation** | Bridge | Track status across all phases |
+| `</>` **Development** | Engineering | Build it in time-boxed sprints |
+| 💓 **Diagnostics** | Engineering | Verify correctness and quality |
+| 🚀 **Deployment** | Engineering | Ship, monitor, learn |
 
 Phase gates prevent premature advancement: no Design without approved Definition, no Development without completed Design, no Deployment without Diagnostics passing.
 

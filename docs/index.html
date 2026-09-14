@@ -105,7 +105,8 @@
   .dcard:hover{transform:translateY(-4px);border-color:var(--border-2);background:var(--card2)}
   .dcard .num{font-family:"JetBrains Mono",monospace;font-size:.8rem;color:var(--dim)}
   .dcard h3{font-size:1.18rem;letter-spacing:-.01em;margin:8px 0 7px;display:flex;align-items:center;gap:9px}
-  .dcard h3 .dotc{width:9px;height:9px;border-radius:50%;flex:none}
+  .dcard h3 .dicon{display:inline-flex;flex:none}
+  .dcard h3 .dicon svg{width:20px;height:20px;display:block}
   .dcard p{color:var(--muted);font-size:.95rem}
   .dcard::after{content:"";position:absolute;inset:0;border-radius:16px;padding:1px;opacity:0;transition:opacity .25s;pointer-events:none;
     background:linear-gradient(120deg,transparent,var(--glow,transparent));-webkit-mask:linear-gradient(#000 0 0) content-box,linear-gradient(#000 0 0);-webkit-mask-composite:xor;mask-composite:exclude}
@@ -223,21 +224,21 @@
 
     <div class="loopcap"><span>Product Loop</span><div class="line"></div></div>
     <div class="bento">
-      <div class="dcard" style="--glow:var(--d1)"><div class="num">01</div><h3><span class="dotc" style="background:var(--d1)"></span>Discovery</h3><p>Identify what to build and why — before a single line of code exists.</p></div>
-      <div class="dcard" style="--glow:var(--d2)"><div class="num">02</div><h3><span class="dotc" style="background:var(--d2)"></span>Definition</h3><p>Write requirements and acceptance criteria the agent can verify against.</p></div>
-      <div class="dcard" style="--glow:var(--d3)"><div class="num">03</div><h3><span class="dotc" style="background:var(--d3)"></span>Design</h3><p>Lock components, interfaces, and standards so the agent stops inventing them.</p></div>
+      <div class="dcard" style="--glow:var(--d1)"><div class="num">01</div><h3><span class="dicon" style="color:var(--d1)"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="9"/><polygon points="14.5 9.5 13 13 9.5 14.5 11 11"/></svg></span>Discovery</h3><p>Identify what to build and why — before a single line of code exists.</p></div>
+      <div class="dcard" style="--glow:var(--d2)"><div class="num">02</div><h3><span class="dicon" style="color:var(--d2)"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M9 18h6"/><path d="M10 21h4"/><path d="M12 3a6 6 0 0 0-3.5 10.9c.6.5.9 1.2.9 2.1h5.2c0-.9.3-1.6.9-2.1A6 6 0 0 0 12 3z"/></svg></span>Definition</h3><p>Write requirements and acceptance criteria the agent can verify against.</p></div>
+      <div class="dcard" style="--glow:var(--d3)"><div class="num">03</div><h3><span class="dicon" style="color:var(--d3)"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="4" width="18" height="16" rx="1.5"/><path d="M8.5 4v16"/><path d="M3 10h5.5"/><path d="M8.5 15h4.5"/></svg></span>Design</h3><p>Lock components, interfaces, and standards so the agent stops inventing them.</p></div>
     </div>
 
     <div class="loopcap"><span>The Bridge</span><div class="line"></div></div>
     <div class="bento bridge">
-      <div class="dcard" style="--glow:var(--d4)"><div class="num">04</div><h3><span class="dotc" style="background:var(--d4)"></span>Documentation — the single source of truth</h3><p>Track status across every phase. One glance to know where the project stands and what's been decided.</p></div>
+      <div class="dcard" style="--glow:var(--d4)"><div class="num">04</div><h3><span class="dicon" style="color:var(--d4)"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M14 3H7a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h10a2 2 0 0 0 2-2V8z"/><polyline points="14 3 14 8 19 8"/><line x1="8.5" y1="13" x2="15.5" y2="13"/><line x1="8.5" y1="17" x2="15.5" y2="17"/><line x1="8.5" y1="9.5" x2="10.5" y2="9.5"/></svg></span>Documentation — the single source of truth</h3><p>Track status across every phase. One glance to know where the project stands and what's been decided.</p></div>
     </div>
 
     <div class="loopcap"><span>Engineering Loop</span><div class="line"></div></div>
     <div class="bento tech">
-      <div class="dcard" style="--glow:var(--d5)"><div class="num">05</div><h3><span class="dotc" style="background:var(--d5)"></span>Development</h3><p>Implement in time-boxed sprints against the approved design.</p></div>
-      <div class="dcard" style="--glow:var(--d6)"><div class="num">06</div><h3><span class="dotc" style="background:var(--d6)"></span>Diagnostics</h3><p>Test for correctness and quality. Sprints close only at zero open bugs.</p></div>
-      <div class="dcard" style="--glow:var(--d7)"><div class="num">07</div><h3><span class="dotc" style="background:var(--d7)"></span>Deployment</h3><p>Ship, monitor, and feed every lesson back into Discovery.</p></div>
+      <div class="dcard" style="--glow:var(--d5)"><div class="num">05</div><h3><span class="dicon" style="color:var(--d5)"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="16 18 22 12 16 6"/><polyline points="8 6 2 12 8 18"/></svg></span>Development</h3><p>Implement in time-boxed sprints against the approved design.</p></div>
+      <div class="dcard" style="--glow:var(--d6)"><div class="num">06</div><h3><span class="dicon" style="color:var(--d6)"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="2 12 6.5 12 9 5.5 13 18.5 15.5 12 22 12"/></svg></span>Diagnostics</h3><p>Test for correctness and quality. Sprints close only at zero open bugs.</p></div>
+      <div class="dcard" style="--glow:var(--d7)"><div class="num">07</div><h3><span class="dicon" style="color:var(--d7)"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 2.5c2.2 1.8 3.5 4.9 3.5 8 0 2.1-.5 4.1-1.3 5.7l-2.2 3-2.2-3c-.8-1.6-1.3-3.6-1.3-5.7 0-3.1 1.3-6.2 3.5-8z"/><circle cx="12" cy="9.5" r="1.4"/><path d="M9 14.5l-3 2 .8-4.2"/><path d="M15 14.5l3 2-.8-4.2"/><path d="M10.3 19.2c0 1 .8 2.3 1.7 2.3s1.7-1.3 1.7-2.3"/></svg></span>Deployment</h3><p>Ship, monitor, and feed every lesson back into Discovery.</p></div>
     </div>
   </div>
 </section>
