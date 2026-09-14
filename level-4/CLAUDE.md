@@ -5,7 +5,7 @@ You are working on a team project where GitHub IS the system of record. Issues, 
 ## How This Project Works
 
 ```
-PRODUCT LOOP                              TECH LOOP
+PRODUCT LOOP                       ENGINEERING LOOP
 GitHub Issues → GitHub Issues → GitHub Issues → Branches/PRs → Actions CI → Actions Deploy
 (Discovery)     (Definition)    (Design)        (Development)  (Diagnostics) (Deployment)
                         ↕                                           ↕

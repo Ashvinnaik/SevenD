@@ -8,7 +8,7 @@ Seven folders, one per phase. Two loops synced by Documentation. Weekly sprints.
 
 ```
 PRODUCT LOOP: 01-discovery/ → 02-definition/ → 03-design/
-TECH LOOP:    05-development/ → 06-diagnostics/ → 07-deployment/
+ENGINEERING LOOP: 05-development/ → 06-diagnostics/ → 07-deployment/
 SYNC:         04-documentation/
 ERROR LOG:    Fix.md
 ```

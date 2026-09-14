@@ -7,7 +7,7 @@ The methodology, vocabulary, and conventions for the 7D Framework. This is the r
 ## The 7 Ds
 
 ```
-PRODUCT LOOP                              TECH LOOP
+PRODUCT LOOP                       ENGINEERING LOOP
 Discovery → Definition → Design    →    Development → Diagnostics → Deployment
                     ↕                                       ↕
                 Documentation (sync point)
@@ -19,11 +19,11 @@ Discovery → Definition → Design    →    Development → Diagnostics → De
 | Definition | Product | Specify requirements and acceptance criteria | Testable specs per feature |
 | Design | Product | Architect components, interfaces, standards | Technical blueprint + component registry |
 | Documentation | Bridge | Track status across all phases | Status board, changelog, document index |
-| Development | Tech | Build it in time-boxed sprints | Working code, sprint logs |
-| Diagnostics | Tech | Verify correctness and quality | Test results, coverage reports |
-| Deployment | Tech | Ship, monitor, learn | Running software, deploy logs, fix log |
+| Development | Engineering | Build it in time-boxed sprints | Working code, sprint logs |
+| Diagnostics | Engineering | Verify correctness and quality | Test results, coverage reports |
+| Deployment | Engineering | Ship, monitor, learn | Running software, deploy logs, fix log |
 
-**Product Loop** figures out WHAT to build. **Tech Loop** BUILDS, VERIFIES, and SHIPS it. **Documentation** keeps them in sync — after any phase completes work, Documentation gets updated; before any phase starts work, it checks Documentation for current status.
+**Product Loop** figures out WHAT to build. **Engineering Loop** BUILDS, VERIFIES, and SHIPS it. **Documentation** keeps them in sync — after any phase completes work, Documentation gets updated; before any phase starts work, it checks Documentation for current status.
 
 **Feedback loop:** Deployment outcomes (errors, user feedback, metrics) feed back into Discovery as new backlog items.
 
@@ -123,7 +123,7 @@ Core terms used throughout the framework. When generating files, use these terms
 | **Variant Layer** | The parts that adapt per project: components, interfaces, constraints, terminology, metrics |
 | **Phase Gate** | A checkpoint requiring human approval before work advances to the next phase |
 | **Product Loop** | Discovery → Definition → Design. Figures out what to build |
-| **Tech Loop** | Development → Diagnostics → Deployment. Builds, verifies, ships |
+| **Engineering Loop** | Development → Diagnostics → Deployment. Builds, verifies, ships |
 | **Sprint** | A time-boxed work cycle (default: 1 week). At Level 3, each phase can have sprints (D1-Sprint1, D5-Sprint2, etc.). Sprints have Build and Bug sections |
 | **STATUS.md** | Root-level dashboard showing active sprints, blockers, and project health at a glance. Level 3+ |
 | **Status Board** | A table in Documentation INDEX tracking every item across all 7 phases. The single source of truth for feature progress |

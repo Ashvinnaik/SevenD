@@ -8,7 +8,7 @@ GitHub IS the system of record. Issues, PRs, Projects, and Actions enforce the 7
 
 ```
 PRODUCT LOOP: Issues (Discovery → Definition → Design)
-TECH LOOP:    Branches/PRs → Actions CI → Actions Deploy
+ENGINEERING LOOP: Branches/PRs → Actions CI → Actions Deploy
 SYNC:         GitHub Projects Board
 FIX LOG:      Issues labeled type:bug
 ```

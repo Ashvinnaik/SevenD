@@ -47,7 +47,7 @@ The 7D Framework has two layers:
 ### Invariants (Never Change)
 
 1. **The 7 Phases**: Discovery → Definition → Design → Documentation → Development → Diagnostics → Deployment
-2. **Two Loops**: Product Loop (Discovery → Definition → Design) and Tech Loop (Development → Diagnostics → Deployment), synced by Documentation
+2. **Two Loops**: Product Loop (Discovery → Definition → Design) and Engineering Loop (Development → Diagnostics → Deployment), synced by Documentation
 3. **Feedback Loop**: Deployment outcomes feed back into Discovery
 4. **Phase Gates**: No Definition without Discovery. No Design without Approved Definition. No Development without completed Design. No Deployment without Diagnostics passing.
 5. **AI/Human Synergy**: AI executes, Human validates. AI stops for human approval at phase gates.

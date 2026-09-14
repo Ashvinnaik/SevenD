@@ -1,6 +1,6 @@
 # 04 — Documentation Index
 
-> The bridge between the Product Loop and the Tech Loop.
+> The bridge between the Product Loop and the Engineering Loop.
 > Tracks what needs to be built, what IS built, and how it works.
 > Each sprint scopes a documentation update cycle.
 

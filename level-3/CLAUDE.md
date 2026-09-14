@@ -5,7 +5,7 @@ You are working on a complex project with seven phase folders, weekly sprints, a
 ## The Two Loops
 
 ```
-PRODUCT LOOP                              TECH LOOP
+PRODUCT LOOP                       ENGINEERING LOOP
 01-discovery/ → 02-definition/ → 03-design/ → 05-development/ → 06-diagnostics/ → 07-deployment/
                         ↕                                    ↕
                   04-documentation/ (sync point)
