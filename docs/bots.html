@@ -106,14 +106,31 @@
   .dcard:hover::after{opacity:.5}
   .bridge .dcard{background:linear-gradient(120deg,rgba(20,184,166,.10),var(--card));border-color:rgba(20,184,166,.28)}
 
-  .steps{display:grid;gap:18px;grid-template-columns:repeat(4,1fr)}
-  @media(max-width:920px){.steps{grid-template-columns:repeat(2,1fr)}}
-  @media(max-width:560px){.steps{grid-template-columns:1fr}}
+  .steps{display:grid;gap:18px;grid-template-columns:repeat(5,1fr)}
+  @media(max-width:1020px){.steps{grid-template-columns:repeat(3,1fr)}}
+  @media(max-width:680px){.steps{grid-template-columns:repeat(2,1fr)}}
+  @media(max-width:420px){.steps{grid-template-columns:1fr}}
   .step{position:relative;background:var(--card);border:1px solid var(--border);border-radius:18px;padding:26px 22px;transition:transform .2s,border-color .2s}
   .step:hover{transform:translateY(-5px);border-color:var(--border-2)}
   .step .num{font-size:2.2rem;font-weight:900;letter-spacing:-.04em;line-height:1;color:var(--brand2);font-family:"JetBrains Mono",monospace}
   .step h3{font-size:1.04rem;margin:12px 0 6px;letter-spacing:-.01em}
   .step p{color:var(--muted);font-size:.9rem}
+  .step.first{border-color:rgba(79,156,249,.5);background:linear-gradient(180deg,rgba(79,156,249,.10),var(--card))}
+  .step.first .tag{position:absolute;top:-11px;left:22px;font-family:"JetBrains Mono",monospace;font-size:.62rem;letter-spacing:.1em;text-transform:uppercase;
+    background:linear-gradient(120deg,#4f9cf9,#22d3ee);color:#05121f;padding:4px 10px;border-radius:999px;font-weight:700}
+
+  .levels{display:grid;gap:18px;grid-template-columns:repeat(4,1fr)}
+  @media(max-width:920px){.levels{grid-template-columns:repeat(2,1fr)}}
+  @media(max-width:520px){.levels{grid-template-columns:1fr}}
+  .lvl{position:relative;background:var(--card);border:1px solid var(--border);border-radius:18px;padding:26px 24px;transition:transform .2s,border-color .2s}
+  .lvl:hover{transform:translateY(-5px);border-color:var(--border-2)}
+  .lvl.hot{border-color:rgba(79,156,249,.5);background:linear-gradient(180deg,rgba(79,156,249,.10),var(--card))}
+  .lvl .rec{position:absolute;top:-11px;left:24px;font-family:"JetBrains Mono",monospace;font-size:.66rem;letter-spacing:.1em;text-transform:uppercase;
+    background:linear-gradient(120deg,#4f9cf9,#22d3ee);color:#05121f;padding:4px 11px;border-radius:999px;font-weight:700}
+  .lvl .num{font-size:2.4rem;font-weight:900;letter-spacing:-.04em;line-height:1}
+  .lvl h3{font-size:1.1rem;margin:10px 0 3px;letter-spacing:-.01em}
+  .lvl .for{color:var(--brand2);font-size:.85rem;font-weight:500;margin-bottom:14px}
+  .lvl p.desc{color:var(--muted);font-size:.88rem}
 
   .gates{width:100%;border-collapse:collapse;background:var(--card);border:1px solid var(--border);border-radius:16px;overflow:hidden}
   .gates th,.gates td{text-align:left;padding:14px 18px;font-size:.92rem;border-bottom:1px solid var(--border)}
@@ -163,6 +180,7 @@
       <span class="lbl">Built on</span>
       <span class="chiplet">Grok (xAI)</span>
       <span class="chiplet">SevenD Framework</span>
+      <span class="chiplet">Cursor Projects</span>
       <span class="chiplet">Levels 1–4</span>
     </div>
   </div>
@@ -234,7 +252,7 @@
       </div>
     </div>
 
-    <div class="loopcap"><span>Tech Loop</span><div class="line"></div></div>
+    <div class="loopcap"><span>Engineering Loop</span><div class="line"></div></div>
     <div class="bento tech">
       <div class="dcard" style="--glow:var(--d5)">
         <div class="num">05 · Development</div>
@@ -270,31 +288,70 @@
   </div>
 </section>
 
+<section id="levels">
+  <div class="wrap">
+    <div class="shead center">
+      <span class="eyebrow">Works at any level</span>
+      <h2>The bots read whatever level you're on</h2>
+      <p>A PM doesn't require Level 3+. It reads the complete input for its phase wherever that lives today — one markdown file, a phase folder, or a GitHub Issue — and produces the same gate-passing output either way.</p>
+    </div>
+    <div class="levels">
+      <div class="lvl">
+        <div class="num">1</div>
+        <h3>Two files</h3><div class="for">Solo · weekend · prototype</div>
+        <p class="desc">Product.md carries Discovery + Definition + Design; Tech.md carries Development + Diagnostics + Deployment. Paste the relevant section into a PM as its complete input — expect a fast, low-ceremony pass.</p>
+      </div>
+      <div class="lvl">
+        <div class="num">2</div>
+        <h3>Four files</h3><div class="for">Small team · real project</div>
+        <p class="desc">Same split, plus Architecture.md and Resources.md. Design PM and Development PM check against the shared component registry instead of guessing at names.</p>
+      </div>
+      <div class="lvl hot">
+        <span class="rec">Recommended</span>
+        <div class="num">3</div>
+        <h3>Phase folders</h3><div class="for">Complex · weekly sprints</div>
+        <p class="desc">Each PM's natural home: its own phase INDEX.md + sprint file, plus reference/ (architecture, components, contracts, decisions). Document PM keeps STATUS.md as the board every other PM checks first.</p>
+      </div>
+      <div class="lvl">
+        <div class="num">4</div>
+        <h3>GitHub-native</h3><div class="for">Team · CI/CD</div>
+        <p class="desc">Issues and Project fields stand in for backlog/spec/sprint files. A passing PR check is Diagnostics PM's complete input; Deployment PM's gate maps to that check passing before merge.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
 <section id="usage">
   <div class="wrap">
     <div class="shead center">
       <span class="eyebrow">Directions</span>
       <h2>How to use a Grok PM bot</h2>
-      <p>Same rule for all seven: complete inputs in, gate-passing output out. Here's the loop.</p>
+      <p>Same rule for all seven: complete inputs in, gate-passing output out. Here's the loop — starting with the one-time setup.</p>
     </div>
     <div class="steps">
-      <div class="step">
+      <div class="step first">
+        <span class="tag">Setup · once</span>
         <div class="num">1</div>
+        <h3>Set up shared context in Cursor</h3>
+        <p>Grok Bots are built to run inside a Cursor project. Before opening any PM, the project needs its shared context in place — Project Scope, Roadmap, Vision, and Strategy — so every bot inherits the same foundation instead of re-deriving it per phase.</p>
+      </div>
+      <div class="step">
+        <div class="num">2</div>
         <h3>Assemble complete inputs</h3>
         <p>Fill in the SevenD file(s) for the phase you're starting — Product.md at Level 1, or the phase's INDEX + sprint file and reference/ docs at Level 3–4. A PM manages the process; it won't invent the backlog or the spec for you.</p>
       </div>
       <div class="step">
-        <div class="num">2</div>
+        <div class="num">3</div>
         <h3>Open the matching PM</h3>
         <p>Click through to that phase's bot on x.ai. Paste or link your complete input — the approved output of the previous phase, plus any new context for this one.</p>
       </div>
       <div class="step">
-        <div class="num">3</div>
+        <div class="num">4</div>
         <h3>Let it run the phase</h3>
         <p>The PM asks clarifying questions on any gap, then drives the phase to its canonical SevenD output — backlog, spec, blueprint, sprint plan, test verdict, or deploy plan.</p>
       </div>
       <div class="step">
-        <div class="num">4</div>
+        <div class="num">5</div>
         <h3>Hand off, don't skip</h3>
         <p>Copy that output into the next phase's complete input and open the next PM. Document PM stays in the loop the whole time, syncing status across every phase.</p>
       </div>
