@@ -1,0 +1,348 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Grok Bots — SevenD Project Manager Bots</title>
+<meta name="description" content="Grok Bots are now generally available: seven Grok-powered Project Manager bots, one per SevenD phase, that run the software development process given complete inputs.">
+<meta property="og:title" content="Grok Bots — SevenD Project Manager Bots">
+<meta property="og:description" content="Seven Grok-powered PM bots — one per SevenD phase — that manage the process of software development given complete inputs. Now generally available.">
+<meta property="og:image" content="assets/SevenD.png">
+<meta name="twitter:card" content="summary_large_image">
+<link rel="icon" type="image/png" href="assets/logo.png">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --bg:#08090d; --bg-soft:#0d0f15; --card:#12151d; --card2:#161a23;
+    --border:rgba(255,255,255,.08); --border-2:rgba(255,255,255,.14);
+    --text:#eef2f7; --muted:#93a0b4; --dim:#6b7686;
+    --brand:#4f9cf9; --brand2:#22d3ee; --brand3:#2c6e9b;
+    --d1:#3b82f6; --d2:#6366f1; --d3:#0ea5e9; --d4:#14b8a6; --d5:#22c55e; --d6:#eab308; --d7:#f97316;
+    --maxw:1140px;
+  }
+  *{box-sizing:border-box;margin:0;padding:0}
+  html{scroll-behavior:smooth}
+  body{background:var(--bg);color:var(--text);font-family:"Inter",-apple-system,BlinkMacSystemFont,"Segoe UI",sans-serif;
+    line-height:1.65;-webkit-font-smoothing:antialiased;overflow-x:hidden}
+  a{color:inherit;text-decoration:none}
+  .wrap{max-width:var(--maxw);margin:0 auto;padding:0 24px}
+  .eyebrow{font-family:"JetBrains Mono",monospace;font-size:.74rem;letter-spacing:.18em;text-transform:uppercase;color:var(--brand2)}
+  .grad{background:linear-gradient(110deg,#7cc0ff 0%,#4f9cf9 40%,#22d3ee 100%);-webkit-background-clip:text;background-clip:text;color:transparent}
+
+  body::before{content:"";position:fixed;inset:0;z-index:-2;background:
+    radial-gradient(720px 420px at 50% -160px,rgba(79,156,249,.22),transparent 70%),
+    radial-gradient(520px 360px at 88% 8%,rgba(34,211,238,.10),transparent 70%);pointer-events:none}
+  body::after{content:"";position:fixed;inset:0;z-index:-1;opacity:.4;pointer-events:none;
+    background-image:linear-gradient(rgba(255,255,255,.025) 1px,transparent 1px),linear-gradient(90deg,rgba(255,255,255,.025) 1px,transparent 1px);
+    background-size:54px 54px;mask-image:radial-gradient(circle at 50% 0,#000,transparent 75%)}
+
+  nav{position:sticky;top:0;z-index:50;backdrop-filter:blur(14px);background:rgba(8,9,13,.7);border-bottom:1px solid var(--border)}
+  nav .wrap{display:flex;align-items:center;height:64px;gap:20px}
+  .brand{display:flex;align-items:center;gap:10px;font-weight:800;letter-spacing:-.02em;font-size:1.05rem}
+  .brand img{height:26px}
+  .nlinks{margin-left:auto;display:flex;align-items:center;gap:28px}
+  .nlinks a{color:var(--muted);font-size:.92rem;font-weight:500;transition:color .2s}
+  .nlinks a:hover{color:var(--text)}
+  .nlinks a.current{color:var(--text)}
+  @media(max-width:720px){.nlinks .hidem{display:none}}
+
+  .btn{display:inline-flex;align-items:center;gap:8px;font-weight:600;font-size:.95rem;padding:11px 20px;border-radius:11px;
+    border:1px solid var(--border-2);transition:transform .15s,box-shadow .25s,background .2s;cursor:pointer;white-space:nowrap}
+  .btn:hover{transform:translateY(-2px)}
+  .btn-primary{background:linear-gradient(120deg,#4f9cf9,#22d3ee);color:#05121f;border:0;font-weight:700;
+    box-shadow:0 8px 30px rgba(79,156,249,.35)}
+  .btn-primary:hover{box-shadow:0 12px 38px rgba(79,156,249,.5)}
+  .btn-ghost{background:rgba(255,255,255,.04);color:var(--text)}
+  .btn-sm{padding:8px 16px;font-size:.88rem}
+
+  .hero{text-align:center;padding:92px 0 30px}
+  .hero .chip{display:inline-flex;align-items:center;gap:9px;padding:6px 15px;border:1px solid var(--border-2);border-radius:999px;
+    background:rgba(255,255,255,.03);font-size:.82rem;color:var(--muted);margin-bottom:30px;font-weight:500}
+  .hero .chip .dot{width:7px;height:7px;border-radius:50%;background:#34d399;box-shadow:0 0 0 4px rgba(52,211,153,.18)}
+  .hero h1{font-size:clamp(2.6rem,6.4vw,4.7rem);line-height:1.02;letter-spacing:-.045em;font-weight:900;margin-bottom:22px}
+  .hero .why{font-size:clamp(1.1rem,2.3vw,1.42rem);color:#c4cedb;max-width:700px;margin:0 auto 14px;font-weight:500}
+  .hero .why em{font-style:normal;color:var(--brand2);font-weight:700}
+  .hero .sub{color:var(--muted);max-width:620px;margin:0 auto 38px;font-size:1.03rem}
+  .hero .cta{display:flex;gap:14px;justify-content:center;flex-wrap:wrap}
+  .worksrow{display:flex;gap:10px;justify-content:center;flex-wrap:wrap;margin-top:38px;align-items:center}
+  .worksrow .lbl{font-family:"JetBrains Mono",monospace;font-size:.72rem;letter-spacing:.12em;text-transform:uppercase;color:var(--dim)}
+  .chiplet{padding:6px 13px;border:1px solid var(--border);border-radius:8px;background:var(--card);font-size:.85rem;color:var(--muted)}
+
+  section{padding:96px 0;position:relative}
+  section.tight{padding-top:0}
+  .shead{max-width:700px;margin-bottom:46px}
+  .shead.center{margin-left:auto;margin-right:auto;text-align:center}
+  .shead h2{font-size:clamp(1.9rem,4vw,2.7rem);letter-spacing:-.035em;font-weight:800;margin:12px 0 14px;line-height:1.1}
+  .shead p{color:var(--muted);font-size:1.08rem}
+
+  .story{max-width:780px;margin:0 auto;text-align:center}
+  .story .big{font-size:clamp(1.4rem,3.2vw,2.1rem);font-weight:700;letter-spacing:-.03em;line-height:1.32;margin-bottom:26px}
+  .story .big .turn{background:linear-gradient(110deg,#4f9cf9,#22d3ee);-webkit-background-clip:text;background-clip:text;color:transparent}
+  .story p{color:var(--muted);font-size:1.06rem;max-width:640px;margin:0 auto}
+
+  .loopcap{display:flex;align-items:center;gap:12px;margin:34px 0 16px}
+  .loopcap span{font-family:"JetBrains Mono",monospace;font-size:.74rem;letter-spacing:.14em;text-transform:uppercase;color:var(--dim);white-space:nowrap}
+  .loopcap .line{flex:1;height:1px;background:var(--border)}
+  .bento{display:grid;gap:16px;grid-template-columns:repeat(3,1fr)}
+  .bento.tech{grid-template-columns:repeat(3,1fr)}
+  .bento.bridge{grid-template-columns:1fr}
+  @media(max-width:760px){.bento,.bento.tech{grid-template-columns:1fr}}
+  .dcard{position:relative;background:var(--card);border:1px solid var(--border);border-radius:16px;padding:24px;overflow:hidden;
+    transition:transform .2s,border-color .2s,background .2s;display:flex;flex-direction:column}
+  .dcard:hover{transform:translateY(-4px);border-color:var(--border-2);background:var(--card2)}
+  .dcard .num{font-family:"JetBrains Mono",monospace;font-size:.8rem;color:var(--dim)}
+  .dcard h3{font-size:1.18rem;letter-spacing:-.01em;margin:8px 0 7px;display:flex;align-items:center;gap:9px}
+  .dcard h3 .dotc{width:9px;height:9px;border-radius:50%;flex:none}
+  .dcard p{color:var(--muted);font-size:.95rem}
+  .dcard .io{list-style:none;margin:14px 0 18px;display:flex;flex-direction:column;gap:5px}
+  .dcard .io li{font-size:.84rem;color:var(--muted);padding-left:16px;position:relative}
+  .dcard .io li b{color:var(--text);font-weight:600}
+  .dcard .io li::before{content:"›";position:absolute;left:0;color:var(--brand)}
+  .dcard .go{margin-top:auto;align-self:flex-start}
+  .dcard::after{content:"";position:absolute;inset:0;border-radius:16px;padding:1px;opacity:0;transition:opacity .25s;pointer-events:none;
+    background:linear-gradient(120deg,transparent,var(--glow,transparent));-webkit-mask:linear-gradient(#000 0 0) content-box,linear-gradient(#000 0 0);-webkit-mask-composite:xor;mask-composite:exclude}
+  .dcard:hover::after{opacity:.5}
+  .bridge .dcard{background:linear-gradient(120deg,rgba(20,184,166,.10),var(--card));border-color:rgba(20,184,166,.28)}
+
+  .steps{display:grid;gap:18px;grid-template-columns:repeat(4,1fr)}
+  @media(max-width:920px){.steps{grid-template-columns:repeat(2,1fr)}}
+  @media(max-width:560px){.steps{grid-template-columns:1fr}}
+  .step{position:relative;background:var(--card);border:1px solid var(--border);border-radius:18px;padding:26px 22px;transition:transform .2s,border-color .2s}
+  .step:hover{transform:translateY(-5px);border-color:var(--border-2)}
+  .step .num{font-size:2.2rem;font-weight:900;letter-spacing:-.04em;line-height:1;color:var(--brand2);font-family:"JetBrains Mono",monospace}
+  .step h3{font-size:1.04rem;margin:12px 0 6px;letter-spacing:-.01em}
+  .step p{color:var(--muted);font-size:.9rem}
+
+  .gates{width:100%;border-collapse:collapse;background:var(--card);border:1px solid var(--border);border-radius:16px;overflow:hidden}
+  .gates th,.gates td{text-align:left;padding:14px 18px;font-size:.92rem;border-bottom:1px solid var(--border)}
+  .gates th{color:var(--dim);font-family:"JetBrains Mono",monospace;font-size:.72rem;letter-spacing:.1em;text-transform:uppercase;font-weight:600;background:rgba(255,255,255,.02)}
+  .gates td{color:var(--muted)}
+  .gates td b{color:var(--text);font-weight:600}
+  .gates tr:last-child td{border-bottom:0}
+  .gatewrap{overflow-x:auto}
+
+  .ctaband{text-align:center;background:linear-gradient(120deg,rgba(79,156,249,.14),rgba(34,211,238,.10));
+    border:1px solid var(--border-2);border-radius:26px;padding:60px 30px;position:relative;overflow:hidden}
+  .ctaband h2{font-size:clamp(1.8rem,4vw,2.6rem);letter-spacing:-.035em;font-weight:800;margin-bottom:14px}
+  .ctaband p{color:var(--muted);max-width:540px;margin:0 auto 30px;font-size:1.05rem}
+  .ctaband .cta{display:flex;gap:14px;justify-content:center;flex-wrap:wrap}
+
+  footer{border-top:1px solid var(--border);padding:46px 0;color:var(--dim);font-size:.92rem}
+  footer .wrap{display:flex;justify-content:space-between;align-items:center;gap:16px;flex-wrap:wrap}
+  footer a{color:var(--muted)}
+  footer a:hover{color:var(--text)}
+</style>
+</head>
+<body>
+
+<nav>
+  <div class="wrap">
+    <a class="brand" href="index.html"><img src="assets/logo.png" alt="">SevenD</a>
+    <div class="nlinks">
+      <a class="hidem" href="index.html#loop">The 7 Ds</a>
+      <a class="hidem" href="index.html#levels">Levels</a>
+      <a class="hidem current" href="bots.html">Grok Bots</a>
+      <a class="btn btn-ghost btn-sm" href="https://github.com/Ashvinnaik/SevenD">★ GitHub</a>
+    </div>
+  </div>
+</nav>
+
+<header class="hero" id="top">
+  <div class="wrap">
+    <div class="chip"><span class="dot"></span> General availability · Grok Bots</div>
+    <h1>Seven phases.<br><span class="grad">Seven Grok PMs.</span></h1>
+    <p class="why">Grok Bots are now generally available — one <em>Project Manager</em> per SevenD phase, built on Grok, that runs the process of software development once you give it <em>complete inputs</em>.</p>
+    <p class="sub">They don't guess. They don't skip ahead. Hand a PM the finished work of the phase before it, and it drives that phase to a done, gate-passing output — then hands off to the next one.</p>
+    <div class="cta">
+      <a class="btn btn-primary" href="#bots">Meet the bots ↓</a>
+      <a class="btn btn-ghost" href="#usage">How to use them →</a>
+    </div>
+    <div class="worksrow">
+      <span class="lbl">Built on</span>
+      <span class="chiplet">Grok (xAI)</span>
+      <span class="chiplet">SevenD Framework</span>
+      <span class="chiplet">Levels 1–4</span>
+    </div>
+  </div>
+</header>
+
+<section id="why">
+  <div class="wrap">
+    <div class="story">
+      <span class="eyebrow">What a Grok Bot PM actually does</span>
+      <p class="big">A PM bot is not a chatbot you brainstorm with. <span class="turn">It's a process manager — it takes the complete inputs for one SevenD phase and runs that phase to a decision.</span></p>
+      <p>Feed the Discovery PM a raw idea and market context, and it comes back with a prioritized backlog. Feed the Design PM an approved spec, and it comes back with a locked component registry and interface contracts. Every bot enforces the same phase gates the SevenD framework already enforces on humans and coding agents — no spec without a backlog item, no code without a completed design, no deploy without diagnostics passing.</p>
+    </div>
+  </div>
+</section>
+
+<section id="bots">
+  <div class="wrap">
+    <div class="shead center">
+      <span class="eyebrow">The lineup</span>
+      <h2>The seven Grok PM bots</h2>
+      <p>One bot per phase of the loop. Open a bot, paste in the complete input for that phase, and let it run the process.</p>
+    </div>
+
+    <div class="loopcap"><span>Product Loop</span><div class="line"></div></div>
+    <div class="bento">
+      <div class="dcard" style="--glow:var(--d1)">
+        <div class="num">01 · Discovery</div>
+        <h3><span class="dotc" style="background:var(--d1)"></span>Discovery PM</h3>
+        <p>Turns a raw idea into a prioritized backlog.</p>
+        <ul class="io">
+          <li><b>Needs:</b> the idea, market/user context, constraints</li>
+          <li><b>Delivers:</b> backlog with priorities (D‑NNN items)</li>
+        </ul>
+        <a class="btn btn-ghost btn-sm go" href="https://x.ai/bot/ht_c0Ev0JRc1O1FAwjsVV">Open Discovery PM ↗</a>
+      </div>
+      <div class="dcard" style="--glow:var(--d2)">
+        <div class="num">02 · Definition</div>
+        <h3><span class="dotc" style="background:var(--d2)"></span>Definition PM</h3>
+        <p>Turns an approved backlog item into testable specs.</p>
+        <ul class="io">
+          <li><b>Needs:</b> an approved backlog item</li>
+          <li><b>Delivers:</b> requirements + acceptance criteria (F##/N##)</li>
+        </ul>
+        <a class="btn btn-ghost btn-sm go" href="https://x.ai/bot/lCPi6D5Smr2QP1QA5_cMr">Open Definition PM ↗</a>
+      </div>
+      <div class="dcard" style="--glow:var(--d3)">
+        <div class="num">03 · Design</div>
+        <h3><span class="dotc" style="background:var(--d3)"></span>Design PM</h3>
+        <p>Turns an approved spec into a technical blueprint.</p>
+        <ul class="io">
+          <li><b>Needs:</b> an approved spec</li>
+          <li><b>Delivers:</b> components, interfaces, contracts, standards</li>
+        </ul>
+        <a class="btn btn-ghost btn-sm go" href="https://x.ai/bot/Q6JhV9jLLQtX6r7bRTCG_">Open Design PM ↗</a>
+      </div>
+    </div>
+
+    <div class="loopcap"><span>The Bridge</span><div class="line"></div></div>
+    <div class="bento bridge">
+      <div class="dcard" style="--glow:var(--d4)">
+        <div class="num">04 · Documentation</div>
+        <h3><span class="dotc" style="background:var(--d4)"></span>Document PM</h3>
+        <p>Keeps every phase in sync — the single source of truth. Runs continuously alongside the other six, not once in sequence: it checks status before any phase starts and updates it after any phase finishes.</p>
+        <ul class="io">
+          <li><b>Needs:</b> the latest output from whichever phase just closed</li>
+          <li><b>Delivers:</b> an updated status board / STATUS.md, document index, changelog</li>
+        </ul>
+        <a class="btn btn-ghost btn-sm go" href="https://x.ai/bot/xheAbAQYQT4esSGc8B3xX">Open Document PM ↗</a>
+      </div>
+    </div>
+
+    <div class="loopcap"><span>Tech Loop</span><div class="line"></div></div>
+    <div class="bento tech">
+      <div class="dcard" style="--glow:var(--d5)">
+        <div class="num">05 · Development</div>
+        <h3><span class="dotc" style="background:var(--d5)"></span>Development PM</h3>
+        <p>Turns a completed design into sprint-ready work.</p>
+        <ul class="io">
+          <li><b>Needs:</b> a completed design (components + interfaces)</li>
+          <li><b>Delivers:</b> sprint plan, task breakdown, build log</li>
+        </ul>
+        <a class="btn btn-ghost btn-sm go" href="https://x.ai/bot/fhHvohYNURwk9JwiK7H7U">Open Development PM ↗</a>
+      </div>
+      <div class="dcard" style="--glow:var(--d6)">
+        <div class="num">06 · Diagnostics</div>
+        <h3><span class="dotc" style="background:var(--d6)"></span>Diagnostics PM</h3>
+        <p>Turns built work into a pass/fail quality verdict.</p>
+        <ul class="io">
+          <li><b>Needs:</b> built code/feature ready for verification</li>
+          <li><b>Delivers:</b> test results, coverage report, zero-bug gate check</li>
+        </ul>
+        <a class="btn btn-ghost btn-sm go" href="https://x.ai/bot/Iz3asXRLoLC8Pr0gZYGdE">Open Diagnostics PM ↗</a>
+      </div>
+      <div class="dcard" style="--glow:var(--d7)">
+        <div class="num">07 · Deployment</div>
+        <h3><span class="dotc" style="background:var(--d7)"></span>Deployment PM</h3>
+        <p>Turns a passing build into a shipped release — and feeds learnings back to Discovery.</p>
+        <ul class="io">
+          <li><b>Needs:</b> diagnostics passing</li>
+          <li><b>Delivers:</b> deploy log, monitoring plan, fix log, new backlog items</li>
+        </ul>
+        <a class="btn btn-ghost btn-sm go" href="https://x.ai/bot/EdkMNLrTT0WLNDQYN-l-e">Open Deployment PM ↗</a>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section id="usage">
+  <div class="wrap">
+    <div class="shead center">
+      <span class="eyebrow">Directions</span>
+      <h2>How to use a Grok PM bot</h2>
+      <p>Same rule for all seven: complete inputs in, gate-passing output out. Here's the loop.</p>
+    </div>
+    <div class="steps">
+      <div class="step">
+        <div class="num">1</div>
+        <h3>Assemble complete inputs</h3>
+        <p>Fill in the SevenD file(s) for the phase you're starting — Product.md at Level 1, or the phase's INDEX + sprint file and reference/ docs at Level 3–4. A PM manages the process; it won't invent the backlog or the spec for you.</p>
+      </div>
+      <div class="step">
+        <div class="num">2</div>
+        <h3>Open the matching PM</h3>
+        <p>Click through to that phase's bot on x.ai. Paste or link your complete input — the approved output of the previous phase, plus any new context for this one.</p>
+      </div>
+      <div class="step">
+        <div class="num">3</div>
+        <h3>Let it run the phase</h3>
+        <p>The PM asks clarifying questions on any gap, then drives the phase to its canonical SevenD output — backlog, spec, blueprint, sprint plan, test verdict, or deploy plan.</p>
+      </div>
+      <div class="step">
+        <div class="num">4</div>
+        <h3>Hand off, don't skip</h3>
+        <p>Copy that output into the next phase's complete input and open the next PM. Document PM stays in the loop the whole time, syncing status across every phase.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="tight">
+  <div class="wrap">
+    <div class="shead center">
+      <span class="eyebrow">Enforced automatically</span>
+      <h2>The bots don't skip gates — even if you ask them to</h2>
+      <p>Every PM inherits the same phase gates as the framework. Incomplete input means the bot pushes back and asks for it, instead of guessing.</p>
+    </div>
+    <div class="gatewrap">
+      <table class="gates">
+        <thead><tr><th>Gate</th><th>Rule the PM enforces</th><th>Why</th></tr></thead>
+        <tbody>
+          <tr><td><b>Discovery → Definition</b></td><td>Definition PM won't write a spec without an approved backlog item</td><td>Prevents speccing things nobody asked for</td></tr>
+          <tr><td><b>Definition → Design</b></td><td>Design PM won't design without an approved spec</td><td>Prevents building to a moving target</td></tr>
+          <tr><td><b>Design → Development</b></td><td>Development PM won't plan a sprint without a completed design</td><td>Prevents agents from inventing architecture</td></tr>
+          <tr><td><b>Diagnostics → Deployment</b></td><td>Deployment PM won't ship without diagnostics passing</td><td>Prevents shipping broken code</td></tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+</section>
+
+<section>
+  <div class="wrap">
+    <div class="ctaband">
+      <span class="eyebrow">Grok Bots · General availability</span>
+      <h2>Start wherever you are in the loop.</h2>
+      <p>New idea? Open Discovery PM. Have an approved design? Open Development PM. Every bot picks up exactly where the last one left off.</p>
+      <div class="cta">
+        <a class="btn btn-primary" href="https://x.ai/bot/ht_c0Ev0JRc1O1FAwjsVV">Start with Discovery PM ↗</a>
+        <a class="btn btn-ghost" href="index.html">← Back to SevenD</a>
+      </div>
+    </div>
+  </div>
+</section>
+
+<footer>
+  <div class="wrap">
+    <span><strong style="color:var(--muted)">SevenD</strong> — Grok Bots run the 7 Ds · MIT licensed</span>
+    <span><a href="https://github.com/Ashvinnaik/SevenD">github.com/Ashvinnaik/SevenD</a></span>
+  </div>
+</footer>
+
+</body>
+</html>

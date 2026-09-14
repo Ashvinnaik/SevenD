@@ -25,6 +25,24 @@ AI coding agents produce better output when they have structured context. Withou
 - **Sprint archiving** -- Closed sprints move to `reference/archive/` to keep working directories clean.
 - **Sprint reports** -- Built into every sprint file. Metrics and learnings captured at close.
 
+## Grok Bots — Now Generally Available
+
+Seven Grok-powered Project Manager bots, one per phase of the 7 Ds. Give a PM bot the complete input for its phase — an approved backlog item, an approved spec, a completed design — and it runs that phase to a gate-passing output, then hands off to the next bot.
+
+📄 **[Grok Bots page: what they do, and how to use them](https://ashvinnaik.github.io/SevenD/bots.html)**
+
+| Phase | Loop | Bot | Link |
+|-------|------|-----|------|
+| Discovery | Product | Discovery PM | https://x.ai/bot/ht_c0Ev0JRc1O1FAwjsVV |
+| Definition | Product | Definition PM | https://x.ai/bot/lCPi6D5Smr2QP1QA5_cMr |
+| Design | Product | Design PM | https://x.ai/bot/Q6JhV9jLLQtX6r7bRTCG_ |
+| Documentation | Bridge | Document PM | https://x.ai/bot/xheAbAQYQT4esSGc8B3xX |
+| Development | Tech | Development PM | https://x.ai/bot/fhHvohYNURwk9JwiK7H7U |
+| Diagnostics | Tech | Diagnostics PM | https://x.ai/bot/Iz3asXRLoLC8Pr0gZYGdE |
+| Deployment | Tech | Deployment PM | https://x.ai/bot/EdkMNLrTT0WLNDQYN-l-e |
+
+Same phase gates as the framework apply: no spec without an approved backlog item, no design without an approved spec, no development plan without a completed design, no deployment without diagnostics passing.
+
 ## Four Levels
 
 Pick the level that matches your project. You can always upgrade.
